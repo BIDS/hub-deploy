@@ -110,8 +110,12 @@ resource "google_container_node_pool" "core" {
 }
 
 
-output "cluster_name" {
-  value = google_container_cluster.cluster.name
+output "cluster" {
+  value = {
+    name     = google_container_cluster.cluster.name,
+    id       = google_container_cluster.cluster.id,
+    location = google_container_cluster.cluster.location,
+  }
 }
 
 # create mapping of service accounts
@@ -145,6 +149,13 @@ output "private_keys" {
   value = {
     for sa_name in keys(local.service_accounts) :
     sa_name => base64decode(google_service_account_key.keys[sa_name].private_key)
+  }
+  sensitive = true
+}
+output "service_accounts" {
+  value = {
+    for sa_name in keys(local.service_accounts) :
+    sa_name => google_service_account.sa[sa_name].email
   }
   sensitive = true
 }
@@ -191,4 +202,35 @@ resource "helm_release" "cert-manager" {
       name  = "ingressShim.defaultIssuerKind"
       value = "ClusterIssuer"
   }]
+}
+
+resource "kubernetes_manifest" "cluster_issuer" {
+  for_each = toset(["staging", "prod"])
+
+  manifest = {
+    apiVersion = "cert-manager.io/v1"
+    kind       = "ClusterIssuer"
+    metadata = {
+      name = "letsencrypt-${each.key}"
+    }
+    spec = {
+      acme = {
+        server = "https://acme${each.key == "staging" ? "-staging" : ""}-v02.api.letsencrypt.org/directory"
+        email  = "minrk@berkeley.edu"
+        privateKeySecretRef = {
+          name = "letsencrypt-${each.key}"
+        }
+        solvers = [{
+          http01 = {
+            ingress = {
+              class = "nginx"
+            }
+          }
+          }
+        ]
+      }
+    }
+  }
+
+  depends_on = [helm_release.cert-manager]
 }
