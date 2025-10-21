@@ -24,7 +24,13 @@ locals {
       display_name = "Deployment account for ${var.name}",
       role         = "roles/container.admin",
     },
+    gke-node = {
+      display_name = "GKE Node SA for ${var.name}",
+      role         = "roles/container.defaultNodeServiceAccount",
+    },
   }
+  location = var.gke_location != null ? var.gke_location : data.google_client_config.provider.region
+  zone     = var.gke_zone != null ? var.gke_zone : data.google_client_config.provider.zone
 }
 
 resource "google_artifact_registry_repository" "repo" {
@@ -41,8 +47,7 @@ resource "google_compute_network" "vpc" {
 
 resource "google_container_cluster" "cluster" {
   name     = var.name
-  location = var.gke_location != null ? var.gke_location : data.google_client_config.provider.zone
-
+  location = local.location
   release_channel {
     channel = "REGULAR"
   }
@@ -64,7 +69,46 @@ resource "google_container_cluster" "cluster" {
       recurrence = "FREQ=WEEKLY;BYDAY=SA"
     }
   }
+  timeouts {
+    create = "20m"
+    update = "30m"
+  }
 }
+
+# define node pools here, too hard to encode with variables
+resource "google_container_node_pool" "core" {
+  name     = "core-2025-10"
+  cluster  = google_container_cluster.cluster.id
+  location = local.location # location of *cluster*
+  # node_locations lets us specify a single-zone regional cluster:
+  node_locations = [local.zone]
+
+  lifecycle {
+    ignore_changes = [node_count]
+  }
+
+  autoscaling {
+    min_node_count = 1
+    max_node_count = 3
+  }
+  node_count = 1
+
+  node_config {
+    machine_type = "e2-highmem-2"
+    disk_size_gb = 50
+    disk_type    = "pd-balanced"
+
+    labels = {
+      "hub.jupyter.org/node-purpose" = "core"
+    }
+    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
+    service_account = google_service_account.sa["gke-node"].email
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/cloud-platform"
+    ]
+  }
+}
+
 
 output "cluster_name" {
   value = google_container_cluster.cluster.name
