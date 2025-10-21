@@ -112,3 +112,39 @@ provider "kubernetes" {
     google_container_cluster.cluster.master_auth[0].cluster_ca_certificate,
   )
 }
+
+provider "helm" {
+  kubernetes = {
+    host  = "https://${google_container_cluster.cluster.endpoint}"
+    token = data.google_client_config.provider.access_token
+    cluster_ca_certificate = base64decode(
+      google_container_cluster.cluster.master_auth[0].cluster_ca_certificate,
+    )
+  }
+}
+
+resource "kubernetes_namespace" "cert-manager" {
+  metadata {
+    name = "cert-manager"
+  }
+}
+
+resource "helm_release" "cert-manager" {
+  name       = "cert-manager"
+  namespace  = kubernetes_namespace.cert-manager.metadata.0.name
+  repository = "https://charts.jetstack.io"
+  chart      = "cert-manager"
+  version    = "v1.19.1"
+  set = [{
+    name  = "crds.enabled"
+    value = "true"
+    },
+    {
+      name  = "ingressShim.defaultIssuerName"
+      value = "letsencrypt-prod"
+    },
+    {
+      name  = "ingressShim.defaultIssuerKind"
+      value = "ClusterIssuer"
+  }]
+}
