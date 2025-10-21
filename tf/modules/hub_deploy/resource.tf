@@ -34,6 +34,11 @@ resource "google_artifact_registry_repository" "repo" {
   format        = "DOCKER"
 }
 
+resource "google_compute_network" "vpc" {
+  name                    = "${var.name}-vpc"
+  auto_create_subnetworks = "true"
+}
+
 resource "google_container_cluster" "cluster" {
   name     = var.name
   location = var.gke_location != null ? var.gke_location : data.google_client_config.provider.zone
@@ -41,6 +46,8 @@ resource "google_container_cluster" "cluster" {
   release_channel {
     channel = "REGULAR"
   }
+
+  network = google_compute_network.vpc.name
 
   # terraform recommends removing the default node pool
   remove_default_node_pool = true
