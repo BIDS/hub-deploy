@@ -78,7 +78,7 @@ resource "google_container_cluster" "cluster" {
 # define node pools here, too hard to encode with variables
 resource "google_container_node_pool" "core" {
   name     = "core-2025-10"
-  cluster  = google_container_cluster.cluster.id
+  cluster  = google_container_cluster.cluster.name
   location = local.location # location of *cluster*
   # node_locations lets us specify a single-zone regional cluster:
   node_locations = [local.zone]
@@ -175,7 +175,7 @@ resource "kubernetes_namespace" "cert-manager" {
 
 resource "helm_release" "cert-manager" {
   name       = "cert-manager"
-  namespace  = kubernetes_namespace.cert-manager.metadata.0.name
+  namespace  = kubernetes_namespace.cert-manager.metadata[0].name
   repository = "https://charts.jetstack.io"
   chart      = "cert-manager"
   version    = "v1.19.1"

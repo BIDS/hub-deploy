@@ -4,6 +4,12 @@ terraform {
     bucket = "tf-state-bids-hub-demo"
     prefix = "tf/state"
   }
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 7.7.0"
+    }
+  }
 }
 
 provider "google" {
@@ -16,7 +22,7 @@ locals {
   name = "demo"
 }
 
-module "hub_deploy" {
-  source = "../../modules/hub_deploy"
+module "gke_cluster" {
+  source = "../../modules/gke_cluster"
   name   = local.name
 }

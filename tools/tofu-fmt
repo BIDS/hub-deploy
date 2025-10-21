@@ -1,14 +1,11 @@
 #!/bin/bash
 set -euo pipefail
 
-if which tofu 2>/dev/null; then
-  echo 'has'
-else
-  echo 'hasnt'
-  exit 1
+if ! which tofu 2>/dev/null; then
+  echo 'skipping tofu fmt because `tofu` not found'
+  exit 0
 fi
-
-echo "$@"
+set -x
 tofu fmt "$@"
 
 for cluster in tf/clusters/*; do
@@ -16,3 +13,7 @@ for cluster in tf/clusters/*; do
   tofu validate
   popd
 done
+
+if which tflint 2>/dev/null; then
+  tflint --recursive --fix
+fi
