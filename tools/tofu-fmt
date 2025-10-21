@@ -1,0 +1,18 @@
+#!/bin/bash
+set -euo pipefail
+
+if which tofu 2>/dev/null; then
+  echo 'has'
+else
+  echo 'hasnt'
+  exit 1
+fi
+
+echo "$@"
+tofu fmt "$@"
+
+for cluster in tf/clusters/*; do
+  pushd "$cluster"
+  tofu validate
+  popd
+done
