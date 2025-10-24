@@ -1,0 +1,22 @@
+jupyterhub:
+  hub:
+    config:
+      JupyterHub:
+        cookie_secret: ENC[AES256_GCM,data:J7ANX4QHrRqOslFruioVsKp+XYhUiPVPETU2UUqxA8+MhvHdKSIjQjODvgLAQQiCPqVXQgDXh6uI7PwLTdspNg==,iv:LRS7iwDr8qqoeSz8fCFO2XjitZUkY7vXlCTciaDzDbg=,tag:LBX4h7DXuk6GAfJl8QCczg==,type:str]
+      CryptKeeper:
+        keys:
+          - ENC[AES256_GCM,data:kRIUiGWtSwFc1oida/wN6vOFAtteq5LlZm1fydFJ+50nl7NVPo/BkGnveD6jk99Z0tNqZ8crv9/HPiNcP5n45g==,iv:ajq1CeD9Ob8fUq1pNz23Ttfyq2Pm7ltXbhV2AsXb5MI=,tag:LtxHw9QRmNl1OWWeidIfEA==,type:str]
+      GitHubOAuthenticator:
+        client_id: ENC[AES256_GCM,data:mKvNAh5T429/jernGiL8q9irOwY=,iv:ST1wDIfMdpGoruFtCQ6LrI1hQL5pRcjGimy7Tk5VEXs=,tag:pbQOB19ZD4Bl2qYgF3sfIA==,type:str]
+        client_secret: ENC[AES256_GCM,data:CPWV4OXv18U0Ib+AWWiAwLuimj/UXqei2L7hbKbntKiFM+k+NGYonA==,iv:VdMdhHz7lZlfg6Mwl1BIk03qqtbApq1By5F5n+b4Hbs=,tag:XjDJV2rA5HzofAlzwpTCsQ==,type:str]
+  proxy:
+    secretToken: ENC[AES256_GCM,data:3QKrgCSyP6Wr17HB79aoy+VK1RbQhtNujm2dVy59HFsszl210D4Z3auoVcWrM/oMR1T0wRm33feJT96loLTyYio=,iv:A1KgOt0mhNAt6VVN4OMfRcDp7kYq37yn6ji29T+p60M=,tag:rAI3Cp0720E6H1gkmBkVdg==,type:str]
+sops:
+  gcp_kms:
+    - resource_id: projects/bids-jupyterhub/locations/global/keyRings/sops/cryptoKeys/sops-key
+      created_at: "2025-10-21T23:38:24Z"
+      enc: CiQANyKZ8JQe1adKWAUM5Zj4Zevua+ecZ/Yaa7QpDmaXBxll760SSQDUA4fNrJIcn6X07JCvjVXPvk35izob3ftA9ZLIIjYjwoYdBBNEuphU0KWlJFsuLktZMbk5PJKLhmuhZ9zgy3TN9MHsmvUEUsk=
+  lastmodified: "2025-10-21T23:38:25Z"
+  mac: ENC[AES256_GCM,data:Awo3ybsiBmMoaaHMMumUSNCdNV59DyY1Yo1PR1ClMRqf2VjK6wrjAZOLysMeCU7aDoN8d/J2gkqPfh/SMStXyjmb39Xi5qdsvM8wMv424NH3QjpcMTtLf2jx4xX2jp87TnVeEFNYWaPSPY2of4yrEwFR9LF7cKEr55gEe1598oM=,iv:gi1DwZ17S0SoFk0xINp8pgHYp9b3O3io6ETiYN4S6N0=,tag:qdccM6flHApDySYrQkixjA==,type:str]
+  unencrypted_suffix: _unencrypted
+  version: 3.11.0

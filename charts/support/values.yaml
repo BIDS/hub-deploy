@@ -1,0 +1,66 @@
+coreNodeSelector: &coreNodeSelector
+  hub.jupyter.org/node-purpose: core
+grafana:
+  nodeSelector: *coreNodeSelector
+  grafana.ini:
+    auth.anonymous:
+      enabled: true
+      org_name: BIDS
+      org_role: Viewer
+    auth.basic:
+      enabled: true
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      kubernetes.io/tls-acme: "true"
+  persistence:
+    size: 2Gi
+    enabled: true
+    accessModes:
+      - ReadWriteOnce
+prometheus:
+  nodeSelector: *coreNodeSelector
+  nodeExporter:
+    updateStrategy:
+      type: RollingUpdate
+  alertmanager:
+    enabled: false
+  pushgateway:
+    enabled: false
+  rbac:
+    create: true
+  server:
+    nodeSelector: *coreNodeSelector
+    podLabels:
+      hub.jupyter.org/network-access-hub: "true"
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      annotations:
+        kubernetes.io/tls-acme: "true"
+  kube-state-metrics:
+    metricLabelsAllowlist:
+      - pods=[app,component]
+      - nodes=[*]
+ingress-nginx:
+  rbac:
+    create: true
+  statsExporter:
+    service:
+      annotations:
+        prometheus.io/scrape: "true"
+  controller:
+    nodeSelector: *coreNodeSelector
+    replicaCount: 2
+    scope:
+      # across all namespaces
+      enabled: false
+    config:
+      # Allow POSTs of up to 64MB, for large notebook support.
+      proxy-body-size: 64m
+    stats:
+      enabled: true
+    service:
+      # Preserve client IPs
+      externalTrafficPolicy: Local

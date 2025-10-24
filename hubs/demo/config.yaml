@@ -1,0 +1,47 @@
+jupyterhub:
+  hub:
+    config:
+      JupyterHub:
+        authenticator_class: github
+      GitHubOAuthenticator:
+        # oauth_callback_url: https://hub.aifutureslab.berkeley.edu/hub/oauth_callback
+        oauth_callback_url: https://hub.aifutureslab.minrk.net/hub/oauth_callback
+        allowed_organizations:
+          - "bids-access:aifutures-hub-users"
+        admin_groups:
+          - "admins"
+        manage_groups: true
+        populate_teams_in_auth_state: true
+        scope:
+          - "read:email"
+          - "read:org"
+    extraConfig:
+      team_groups: |
+        def access_team_groups(auth_state):
+          # id of bids-access github organization
+          access_org_id = 239249075
+          access_teams = []
+          for team in auth_state["teams"]:
+            if team.get("organization_id") != access_org_id:
+              continue
+            access_teams.append(team["slug"])
+
+          return access_teams
+
+        c.GitHubOAuthenticator.auth_state_groups_key = access_team_groups
+      default_url: |
+        def default_url(request):
+          if request.current_user and request.current_user.admin:
+            return '/hub/admin'
+          return ''
+
+        c.JupyterHub.default_url = default_url
+  ingress:
+    hosts:
+      - hub.aifutureslab.berkeley.edu
+      - hub.aifutureslab.minrk.net
+    tls:
+      - secretName: tls-jupyterhub
+        hosts:
+          # - hub.aifutureslab.berkeley.edu
+          - hub.aifutureslab.minrk.net

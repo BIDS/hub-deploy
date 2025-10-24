@@ -16,6 +16,15 @@ Create bucket for OpenTofu state:
 gcloud storage buckets create --public-access-prevention gs://tf-state-bids-hub-demo 
 ```
 
-enable GKE at https://console.developers.google.com/apis/api/container.googleapis.com/overview?project=bids-jupyterhub
+## General design
 
-Create cluster with OpenTofu (`nox tf`)
+1. OpenTofu to create clusters
+1. OpenTofu cluster deploy includes cert-manager
+1. each cluster deploys a 'support' chart with ingress controller, analytics
+1. hubs are deployed in namespaces on clusters (one or more per cluster)
+
+Details:
+
+- nox encapsulates steps
+- sops encrypts secrets
+- deploy from GitHub Actions

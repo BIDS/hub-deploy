@@ -1,0 +1,69 @@
+coreNodeSelector: &coreNodeSelector
+  hub.jupyter.org/node-purpose: core
+jupyterhub:
+  proxy:
+    chp:
+      nodeSelector: *coreNodeSelector
+    service:
+      type: ClusterIP
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      ingress.kubernetes.io/proxy-body-size: 64m
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+  singleuser:
+    events: true
+    image:
+      name: quay.io/jupyter/scipy-notebook
+      tag: "2025-10-21"
+    memory:
+      limit: 2G
+      guarantee: 1G
+    cpu:
+      limit: 1
+      guarantee: 0.5
+    extraEnv:
+      CULL_CONNECTED: "1"
+      CULL_TIMEOUT: "1800"
+      CULL_KERNEL_TIMEOUT: "1800"
+      CULL_INTERVAL: "120"
+  prePuller:
+    hook:
+      enabled: false
+    continuous:
+      enabled: true
+  hub:
+    nodeSelector: *coreNodeSelector
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/path: /hub/metrics
+    config:
+      JupyterHub:
+        authenticate_prometheus: false
+        template_paths:
+          - /opt/extra_templates
+    extraFiles:
+      page_template:
+        mountPath: /opt/extra_templates/page.html
+        stringData: |
+          {% extends 'templates/page.html' %}
+          {%- block scripts %}
+          {{ super() }}
+          <script async src="https://siteimproveanalytics.com/js/siteanalyze_6294756.js"></script>
+          {%- endblock scripts %}
+  scheduling:
+    userScheduler:
+      enabled: true
+    podPriority:
+      enabled: true
+    userPlaceholder:
+      enabled: true
+      replicas: 0
+    userPods:
+      nodeAffinity:
+        matchNodePurpose: require
+    corePods:
+      nodeAffinity:
+        matchNodePurpose: require

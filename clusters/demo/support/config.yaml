@@ -1,0 +1,42 @@
+coreNodeSelector: &coreNodeSelector
+  hub.jupyter.org/node-purpose: core
+grafana:
+  nodeSelector: *coreNodeSelector
+  grafana.ini:
+    auth.anonymous:
+      enabled: true
+      org_name: BIDS
+      org_role: Viewer
+    auth.basic:
+      enabled: true
+  ingress:
+    hosts:
+      - grafana.hub.aifutureslab.berkeley.edu
+      - grafana.hub.aifutureslab.minrk.net
+    tls:
+      - hosts:
+          # - grafana.hub.aifutureslab.berkeley.edu
+          - grafana.hub.aifutureslab.minrk.net
+        secretName: tls-grafana
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: prometheus
+          orgId: 1
+          type: prometheus
+          # url: https://prometheus.hub.aifutureslab.berkeley.edu
+          url: https://prometheus.hub.aifutureslab.minrk.net
+          isDefault: true
+          editable: false
+prometheus:
+  server:
+    ingress:
+      hosts:
+        - prometheus.hub.aifutureslab.berkeley.edu
+        - prometheus.hub.aifutureslab.minrk.net
+      tls:
+        - hosts:
+            # - prometheus.hub.aifutureslab.berkeley.edu
+            - prometheus.hub.aifutureslab.minrk.net
+          secretName: tls-prometheus

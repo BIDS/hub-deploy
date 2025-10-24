@@ -207,3 +207,11 @@ marimo/_lsp/
 __marimo__/
 
 .terraform
+
+# don't commit decrypted files
+*.dec.*
+gke_gcloud_auth_plugin_cache
+
+charts/*/charts
+
+.DS_Store

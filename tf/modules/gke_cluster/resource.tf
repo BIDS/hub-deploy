@@ -184,6 +184,12 @@ resource "kubernetes_namespace" "cert-manager" {
   }
 }
 
+resource "kubernetes_namespace" "support" {
+  metadata {
+    name = "support"
+  }
+}
+
 resource "helm_release" "cert-manager" {
   name       = "cert-manager"
   namespace  = kubernetes_namespace.cert-manager.metadata[0].name
