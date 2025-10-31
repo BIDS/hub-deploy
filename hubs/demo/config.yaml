@@ -3,9 +3,9 @@ jupyterhub:
     config:
       JupyterHub:
         authenticator_class: github
+        public_url: https://aifutureslab-hub.bids.berkeley.edu
       GitHubOAuthenticator:
-        # oauth_callback_url: https://hub.aifutureslab.berkeley.edu/hub/oauth_callback
-        oauth_callback_url: https://hub.aifutureslab.minrk.net/hub/oauth_callback
+        oauth_callback_url: https://aifutureslab-hub.bids.berkeley.edu/hub/oauth_callback
         allowed_organizations:
           - "bids-access:aifutures-hub-users"
         admin_groups:
@@ -38,10 +38,8 @@ jupyterhub:
         c.JupyterHub.default_url = default_url
   ingress:
     hosts:
-      - hub.aifutureslab.berkeley.edu
-      - hub.aifutureslab.minrk.net
+      - aifutureslab-hub.bids.berkeley.edu
     tls:
       - secretName: tls-jupyterhub
         hosts:
-          # - hub.aifutureslab.berkeley.edu
-          - hub.aifutureslab.minrk.net
+          - aifutureslab-hub.bids.berkeley.edu

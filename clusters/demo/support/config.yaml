@@ -11,12 +11,10 @@ grafana:
       enabled: true
   ingress:
     hosts:
-      - grafana.hub.aifutureslab.berkeley.edu
-      - grafana.hub.aifutureslab.minrk.net
+      - aifutureslab-hub-grafana.bids.berkeley.edu
     tls:
       - hosts:
-          # - grafana.hub.aifutureslab.berkeley.edu
-          - grafana.hub.aifutureslab.minrk.net
+          - aifutureslab-hub-grafana.bids.berkeley.edu
         secretName: tls-grafana
   datasources:
     datasources.yaml:
@@ -25,18 +23,15 @@ grafana:
         - name: prometheus
           orgId: 1
           type: prometheus
-          # url: https://prometheus.hub.aifutureslab.berkeley.edu
-          url: https://prometheus.hub.aifutureslab.minrk.net
+          url: https://aifutureslab-hub-prometheus.bids.berkeley.edu
           isDefault: true
           editable: false
 prometheus:
   server:
     ingress:
       hosts:
-        - prometheus.hub.aifutureslab.berkeley.edu
-        - prometheus.hub.aifutureslab.minrk.net
+        - aifutureslab-hub-prometheus.bids.berkeley.edu
       tls:
         - hosts:
-            # - prometheus.hub.aifutureslab.berkeley.edu
-            - prometheus.hub.aifutureslab.minrk.net
+            - aifutureslab-hub-prometheus.bids.berkeley.edu
           secretName: tls-prometheus
