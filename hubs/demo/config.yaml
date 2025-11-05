@@ -33,7 +33,7 @@ jupyterhub:
         def default_url(request):
           if request.current_user and request.current_user.admin:
             return '/hub/admin'
-          return ''
+          return '/hub/spawn'
 
         c.JupyterHub.default_url = default_url
   ingress:
