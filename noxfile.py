@@ -49,11 +49,9 @@ def decrypt_file(session, src: Path):
 @nox.session
 def decrypt(session):
     cluster_path = cluster_dir(cluster_name)
-    for src in cluster_path.rglob("*.enc.*"):
-        decrypt_file(session, src)
-    hub_path = hub_dir(hub_name)
-    for src in hub_path.rglob("*.enc.*"):
-        decrypt_file(session, src)
+    for parent_dir in (cluster_path, hub_dir(hub_name), hub_dir("_common")):
+        for src in parent_dir.rglob("*.enc.*"):
+            decrypt_file(session, src)
 
 
 @nox.session
@@ -85,16 +83,19 @@ def helm_support(session):
 def helm_hub(session):
     decrypt(session)
     cluster_path = cluster_dir(cluster_name)
-    hub_path = ROOT / "hubs" / hub_name
+    common_path = hub_dir("_common")
+    hub_path = hub_dir(hub_name)
+    assert common_path.exists()
     assert hub_path.exists()
     kubeconfig = cluster_path / "kubeconfig.dec.yaml"
     assert kubeconfig.exists()
     os.environ["KUBECONFIG"] = str(kubeconfig)
     session.run("helm", "dependency", "update", HUB_CHART, external=True)
     values_args = []
-    for path in hub_path.rglob("*.yaml"):
-        if ".enc." not in path.name:
-            values_args.extend(["--values", str(path)])
+    for config_dir in (common_path, hub_path):
+        for path in config_dir.rglob("*.yaml"):
+            if ".enc." not in path.name:
+                values_args.extend(["--values", str(path)])
 
     session.run(
         "helm",

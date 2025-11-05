@@ -1,0 +1,34 @@
+# source: https://github.com/2i2c-org/jupyterhub-home-nfs/blob/main/examples/jupyterhub-nfs-volume.yaml
+# Volume definition to set up a NFS volume for JupyterHub to store users' home directories.
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: "{{ .Release.Name }}-home-nfs-mount"
+spec:
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: home-nfs.{{ .Release.Namespace }}.svc.cluster.local
+    path: /
+  mountOptions:
+    - rsize=1048576
+    - wsize=1048576
+    - timeo=600
+    - soft # We pick soft over hard, so NFS lockups don't lead to hung processes
+    - retrans=2
+    - noresvport
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: home-nfs-mount
+spec:
+  accessModes:
+    - ReadWriteMany
+  volumeName: "{{ .Release.Name }}-home-nfs-mount"
+  storageClassName: ""
+  resources:
+    requests:
+      storage: 1Mi

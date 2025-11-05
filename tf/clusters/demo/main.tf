@@ -27,6 +27,13 @@ data "google_client_config" "provider" {}
 module "gke_cluster" {
   source = "../../modules/gke_cluster"
   name   = local.name
+  hub_nfs_disks = {
+    demo = {
+      name = "hub-nfs-demo"
+      type = "pd-balanced"
+      size = 50
+    }
+  }
 }
 
 resource "google_container_node_pool" "user" {

@@ -1,0 +1,25 @@
+jupyterhub:
+  singleuser:
+    initContainers:
+      # Make sure the home directory is owned by the user.
+      - name: volume-mount-ownership-fix
+        image: busybox:1.36.1
+        command:
+          - sh
+          - -c
+          - id && chown 1000:1000 /home/jovyan && ls -lhd /home/jovyan
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: home
+            mountPath: /home/jovyan
+            subPath: "{safe_username}"
+    storage:
+      type: static
+      static:
+        pvcName: home-nfs-mount
+        subPath: "{safe_username}"
+    extraEnv:
+      JUPYTER_RUNTIME_DIR: "/tmp/jupyter-runtime"
+      # XDG_CACHE_DIR: "/tmp/cache"
+      SHELL: /bin/bash

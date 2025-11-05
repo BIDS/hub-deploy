@@ -43,3 +43,11 @@ jupyterhub:
       - secretName: tls-jupyterhub
         hosts:
           - aifutureslab-hub.bids.berkeley.edu
+jupyterhub-home-nfs:
+  prometheusExporter:
+    enabled: true
+  gke:
+    enabled: true
+    volumeId: projects/bids-jupyterhub/zones/us-central1-a/disks/hub-nfs-demo
+  quotaEnforcer:
+    hardQuota: "10" # in GiB

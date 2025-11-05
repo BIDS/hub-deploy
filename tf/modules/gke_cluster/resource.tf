@@ -152,12 +152,24 @@ output "private_keys" {
   }
   sensitive = true
 }
+
 output "service_accounts" {
   value = {
     for sa_name in keys(local.service_accounts) :
     sa_name => google_service_account.sa[sa_name].email
   }
   sensitive = true
+}
+
+resource "google_compute_disk" "nfs" {
+  for_each = var.hub_nfs_disks
+  name     = each.value.name
+  type     = each.value.type
+  zone     = data.google_client_config.provider.zone
+  size     = each.value.size
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 provider "kubernetes" {

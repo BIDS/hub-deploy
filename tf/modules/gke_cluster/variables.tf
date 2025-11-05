@@ -20,3 +20,17 @@ variable "registry_location" {
   description = "Registry location for cluster if different from provider region, e.g. us for multi-region"
   default     = null
 }
+
+variable "hub_nfs_disks" {
+  type = map(
+    object(
+      {
+        name = string
+        type = string
+        size = number
+      }
+    )
+  )
+  description = "nfs disks to create; for use by jupyterhub-home-nfs"
+  default     = {}
+}
