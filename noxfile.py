@@ -24,6 +24,22 @@ def hub_dir(cluster_name):
     return ROOT / "hubs" / cluster_name
 
 
+def set_kubeconfig(cluster_name: str) -> None:
+    cluster_path = cluster_dir(cluster_name)
+    kubeconfig = cluster_path / "kubeconfig.dec.yaml"
+    assert kubeconfig.exists()
+    os.environ["KUBECONFIG"] = str(kubeconfig)
+
+
+def get_values_args(*values_dirs):
+    args = []
+    for values_dir in values_dirs:
+        for values_yaml in values_dir.rglob("*.yaml"):
+            if ".enc." not in values_yaml.name:
+                args.extend(["--values", str(values_yaml)])
+    return args
+
+
 @nox.session
 def tofu_apply(session):
     """apply tofu changes
@@ -58,14 +74,9 @@ def decrypt(session):
 def helm_support(session):
     decrypt(session)
     cluster_path = cluster_dir(cluster_name)
-    kubeconfig = cluster_path / "kubeconfig.dec.yaml"
-    assert kubeconfig.exists()
-    os.environ["KUBECONFIG"] = str(kubeconfig)
+    set_kubeconfig(cluster_name)
     session.run("helm", "dependency", "update", SUPPORT_CHART, external=True)
-    values_args = []
-    for path in (cluster_path / "support").rglob("*.yaml"):
-        if ".enc." not in path.name:
-            values_args.extend(["--values", str(path)])
+    values_args = get_values_args(cluster_path / "support")
 
     session.run(
         "helm",
@@ -82,20 +93,13 @@ def helm_support(session):
 @nox.session
 def helm_hub(session):
     decrypt(session)
-    cluster_path = cluster_dir(cluster_name)
     common_path = hub_dir("_common")
     hub_path = hub_dir(hub_name)
     assert common_path.exists()
     assert hub_path.exists()
-    kubeconfig = cluster_path / "kubeconfig.dec.yaml"
-    assert kubeconfig.exists()
-    os.environ["KUBECONFIG"] = str(kubeconfig)
+    set_kubeconfig(cluster_name)
     session.run("helm", "dependency", "update", HUB_CHART, external=True)
-    values_args = []
-    for config_dir in (common_path, hub_path):
-        for path in config_dir.rglob("*.yaml"):
-            if ".enc." not in path.name:
-                values_args.extend(["--values", str(path)])
+    values_args = get_values_args(common_path, hub_path)
 
     session.run(
         "helm",
