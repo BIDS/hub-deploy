@@ -35,3 +35,9 @@ prometheus:
         - hosts:
             - aifutureslab-hub-prometheus.bids.berkeley.edu
           secretName: tls-prometheus
+traefik:
+  service:
+    annotations:
+      # use the reserved ip for ingress
+      cloud.google.com/l4-rbs: "enabled"
+      networking.gke.io/load-balancer-ip-addresses: "demo-ingress"

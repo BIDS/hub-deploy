@@ -247,7 +247,7 @@ resource "kubernetes_manifest" "cluster_issuer" {
         solvers = [{
           http01 = {
             ingress = {
-              class = "nginx"
+              class = "traefik"
             }
           }
           }
