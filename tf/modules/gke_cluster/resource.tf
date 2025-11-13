@@ -172,6 +172,12 @@ resource "google_compute_disk" "nfs" {
   }
 }
 
+resource "google_compute_address" "ingress" {
+  name        = "${var.name}-ingress"
+  description = "static ip for ${var.name} cluster ingress controller"
+  region      = data.google_client_config.provider.region
+}
+
 provider "kubernetes" {
   host  = "https://${google_container_cluster.cluster.endpoint}"
   token = data.google_client_config.provider.access_token
@@ -241,7 +247,7 @@ resource "kubernetes_manifest" "cluster_issuer" {
         solvers = [{
           http01 = {
             ingress = {
-              class = "nginx"
+              class = "traefik"
             }
           }
           }

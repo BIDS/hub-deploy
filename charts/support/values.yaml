@@ -11,7 +11,7 @@ grafana:
       enabled: true
   ingress:
     enabled: true
-    ingressClassName: nginx
+    ingressClassName: traefik
     annotations:
       kubernetes.io/tls-acme: "true"
   persistence:
@@ -36,31 +36,24 @@ prometheus:
       hub.jupyter.org/network-access-hub: "true"
     ingress:
       enabled: true
-      ingressClassName: nginx
+      ingressClassName: traefik
       annotations:
         kubernetes.io/tls-acme: "true"
   kube-state-metrics:
     metricLabelsAllowlist:
       - pods=[app,component]
       - nodes=[*]
-ingress-nginx:
-  rbac:
-    create: true
-  statsExporter:
-    service:
-      annotations:
-        prometheus.io/scrape: "true"
-  controller:
-    nodeSelector: *coreNodeSelector
-    replicaCount: 2
-    scope:
-      # across all namespaces
-      enabled: false
-    config:
-      # Allow POSTs of up to 64MB, for large notebook support.
-      proxy-body-size: 64m
-    stats:
-      enabled: true
-    service:
+traefik:
+  service:
+    spec:
       # Preserve client IPs
       externalTrafficPolicy: Local
+  ingressClass:
+    name: traefik
+    isDefaultClass: true
+  nodeSelector: *coreNodeSelector
+  deployment:
+    replicas: 2
+  logs:
+    access:
+      enabled: true

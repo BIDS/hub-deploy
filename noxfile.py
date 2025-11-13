@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from tempfile import NamedTemporaryFile
 
 import nox
 
@@ -68,6 +69,28 @@ def decrypt(session):
     for parent_dir in (cluster_path, hub_dir(hub_name), hub_dir("_common")):
         for src in parent_dir.rglob("*.enc.*"):
             decrypt_file(session, src)
+
+
+@nox.session
+def helm_support_upgrade_crds(session):
+    decrypt(session)
+    set_kubeconfig(cluster_name)
+    session.run("helm", "dependency", "update", SUPPORT_CHART, external=True)
+    # apply any CRD upgrades
+    # helm cannot upgrade CRDs
+    # from https://github.com/traefik/traefik-helm-chart?tab=readme-ov-file#upgrade-the-standalone-traefik-chart
+    with NamedTemporaryFile() as f:
+        session.run("helm", "show", "crds", SUPPORT_CHART, external=True, stdout=f)
+        f.flush()
+        session.run(
+            "kubectl",
+            "apply",
+            "--server-side",
+            "--force-conflicts",
+            "-f",
+            f.name,
+            external=True,
+        )
 
 
 @nox.session
