@@ -76,7 +76,7 @@ def helm_support_upgrade_crds(session):
     decrypt(session)
     set_kubeconfig(cluster_name)
     session.run("helm", "dependency", "update", SUPPORT_CHART, external=True)
-    # apply any CRD upgrades
+    # apply any CRD upgrades (e.g. cert-manager)
     # helm cannot upgrade CRDs
     # from https://github.com/traefik/traefik-helm-chart?tab=readme-ov-file#upgrade-the-standalone-traefik-chart
     with NamedTemporaryFile() as f:

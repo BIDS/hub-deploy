@@ -44,6 +44,9 @@ prometheus:
       - pods=[app,component]
       - nodes=[*]
 traefik:
+  providers:
+    kubernetesCRD:
+      enabled: false
   service:
     spec:
       # Preserve client IPs
