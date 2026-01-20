@@ -1,5 +1,17 @@
 coreNodeSelector: &coreNodeSelector
   hub.jupyter.org/node-purpose: core
+gateway:
+  issuerName: letsencrypt-prod
+  # need to specify each hostname individually on the gateway
+  # for cert-manager
+  hostnames: []
+  config:
+    # passthrough for EnvoyProxy config
+    # https://gateway.envoyproxy.io/docs/tasks/operations/customize-envoyproxy/
+    provider:
+      type: Kubernetes
+clusterIssuer:
+  enabled: true
 grafana:
   nodeSelector: *coreNodeSelector
   grafana.ini:
@@ -9,11 +21,12 @@ grafana:
       org_role: Viewer
     auth.basic:
       enabled: true
-  ingress:
-    enabled: true
-    ingressClassName: traefik
-    annotations:
-      kubernetes.io/tls-acme: "true"
+  route:
+    main:
+      enabled: true
+      parentRefs:
+        - name: default
+          namespace: support
   persistence:
     size: 2Gi
     enabled: true
@@ -34,29 +47,13 @@ prometheus:
     nodeSelector: *coreNodeSelector
     podLabels:
       hub.jupyter.org/network-access-hub: "true"
-    ingress:
-      enabled: true
-      ingressClassName: traefik
-      annotations:
-        kubernetes.io/tls-acme: "true"
+    route:
+      main:
+        enabled: true
+        parentRefs:
+          - name: default
+            namespace: support
   kube-state-metrics:
     metricLabelsAllowlist:
       - pods=[app,component]
       - nodes=[*]
-traefik:
-  providers:
-    kubernetesCRD:
-      enabled: false
-  service:
-    spec:
-      # Preserve client IPs
-      externalTrafficPolicy: Local
-  ingressClass:
-    name: traefik
-    isDefaultClass: true
-  nodeSelector: *coreNodeSelector
-  deployment:
-    replicas: 2
-  logs:
-    access:
-      enabled: true
