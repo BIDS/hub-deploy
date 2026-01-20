@@ -1,12 +1,12 @@
 dependencies:
-- name: traefik
-  repository: oci://ghcr.io/traefik/helm
-  version: 37.3.0
+- name: gateway-helm
+  repository: oci://docker.io/envoyproxy
+  version: v1.6.2
 - name: prometheus
   repository: https://prometheus-community.github.io/helm-charts
   version: 27.36.0
 - name: grafana
   repository: https://grafana.github.io/helm-charts
   version: 9.4.4
-digest: sha256:5094d54c16db4ac9e137f08c09beba64d795ef9204750bf0702f72630d99bcee
-generated: "2025-11-13T13:03:08.448858-08:00"
+digest: sha256:46c838cb3dd725f56d1e76db31a38805116bb69329e8c29273416e08361a6cac
+generated: "2026-01-20T07:42:37.363889-08:00"

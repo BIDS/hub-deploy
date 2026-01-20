@@ -6,12 +6,11 @@ jupyterhub:
       nodeSelector: *coreNodeSelector
     service:
       type: ClusterIP
-  ingress:
+  httpRoute:
     enabled: true
-    ingressClassName: traefik
-    annotations:
-      ingress.kubernetes.io/proxy-body-size: 64m
-      kubernetes.io/tls-acme: "true"
+    gateway:
+      name: default
+      namespace: support
   singleuser:
     events: true
     image:

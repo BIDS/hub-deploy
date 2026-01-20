@@ -1,5 +1,20 @@
 coreNodeSelector: &coreNodeSelector
   hub.jupyter.org/node-purpose: core
+gateway:
+  # need to specify each hostname individually on the gateway
+  # for cert-manager
+  hostnames:
+    - aifutureslab-hub-grafana.bids.berkeley.edu
+    - aifutureslab-hub-prometheus.bids.berkeley.edu
+    - aifutureslab-hub.bids.berkeley.edu
+  config:
+    provider:
+      kubernetes:
+        envoyService:
+          annotations:
+            # preserve ip when gateway service gets recreated
+            cloud.google.com/l4-rbs: "enabled"
+            networking.gke.io/load-balancer-ip-addresses: "demo-ingress"
 grafana:
   nodeSelector: *coreNodeSelector
   grafana.ini:
@@ -9,13 +24,10 @@ grafana:
       org_role: Viewer
     auth.basic:
       enabled: true
-  ingress:
-    hosts:
-      - aifutureslab-hub-grafana.bids.berkeley.edu
-    tls:
-      - hosts:
-          - aifutureslab-hub-grafana.bids.berkeley.edu
-        secretName: tls-grafana
+  route:
+    main:
+      hostnames:
+        - aifutureslab-hub-grafana.bids.berkeley.edu
   datasources:
     datasources.yaml:
       apiVersion: 1
@@ -28,16 +40,7 @@ grafana:
           editable: false
 prometheus:
   server:
-    ingress:
-      hosts:
-        - aifutureslab-hub-prometheus.bids.berkeley.edu
-      tls:
-        - hosts:
-            - aifutureslab-hub-prometheus.bids.berkeley.edu
-          secretName: tls-prometheus
-traefik:
-  service:
-    annotations:
-      # use the reserved ip for ingress
-      cloud.google.com/l4-rbs: "enabled"
-      networking.gke.io/load-balancer-ip-addresses: "demo-ingress"
+    route:
+      main:
+        hostnames:
+          - aifutureslab-hub-prometheus.bids.berkeley.edu

@@ -214,47 +214,26 @@ resource "helm_release" "cert-manager" {
   repository = "https://charts.jetstack.io"
   chart      = "cert-manager"
   version    = "v1.19.1"
-  set = [{
-    name  = "crds.enabled"
-    value = "true"
+  set = [
+    {
+      name  = "crds.enabled"
+      value = "true"
     },
     {
-      name  = "ingressShim.defaultIssuerName"
-      value = "letsencrypt-prod"
+      name  = "config.apiVersion"
+      value = "controller.config.cert-manager.io/v1alpha1"
+    },
+    {
+      name  = "config.kind"
+      value = "ControllerConfiguration"
+    },
+    {
+      name  = "config.enableGatewayAPI"
+      value = "true"
     },
     {
       name  = "ingressShim.defaultIssuerKind"
       value = "ClusterIssuer"
-  }]
-}
-
-resource "kubernetes_manifest" "cluster_issuer" {
-  for_each = toset(["staging", "prod"])
-
-  manifest = {
-    apiVersion = "cert-manager.io/v1"
-    kind       = "ClusterIssuer"
-    metadata = {
-      name = "letsencrypt-${each.key}"
     }
-    spec = {
-      acme = {
-        server = "https://acme${each.key == "staging" ? "-staging" : ""}-v02.api.letsencrypt.org/directory"
-        email  = "minrk@berkeley.edu"
-        privateKeySecretRef = {
-          name = "letsencrypt-${each.key}"
-        }
-        solvers = [{
-          http01 = {
-            ingress = {
-              class = "traefik"
-            }
-          }
-          }
-        ]
-      }
-    }
-  }
-
-  depends_on = [helm_release.cert-manager]
+  ]
 }
