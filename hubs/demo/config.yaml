@@ -40,7 +40,10 @@ jupyterhub:
 
         c.JupyterHub.default_url = default_url
   singleuser:
-    image: ghcr.io/bids/aifutureslab/demo:main
+    image:
+      name: ghcr.io/bids/aifutureshub/user
+      tag: main
+      pullPolicy: Always
 jupyterhub-home-nfs:
   prometheusExporter:
     enabled: true
