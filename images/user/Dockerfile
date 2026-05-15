@@ -4,31 +4,29 @@ FROM ghcr.io/prefix-dev/pixi:0.68.1 AS build
 COPY pixi* /srv/
 WORKDIR /srv/
 RUN pixi install
-COPY *.sh /srv/
+COPY install-opencode.sh /srv/
 RUN pixi run install-opencode
-# Create the shell-hook bash script to activate the environment
-RUN pixi shell-hook > /shell-hook.sh
-
-# extend the shell-hook script to run the command passed to the container
-RUN echo 'exec "$@"' >> /shell-hook.sh
 
 FROM debian:13
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
         git \
-        vim \ 
         nano \
+        procps \
+        vim \ 
  && rm -rf /var/lib/apt/lists/*
  
 ARG UID=1000
 RUN useradd -m -u 1000 jovyan
 COPY --from=build /srv/.pixi/envs/default /srv/.pixi/envs/default
-COPY --from=build /shell-hook.sh /shell-hook.sh
+COPY entrypoint.sh /entrypoint.sh
+COPY mambarc /srv/.pixi/envs/default/.condarc
 
 ENV PYTHONUNBUFFERED=1
 WORKDIR /home/jovyan
 USER $UID
 
-ENTRYPOINT ["/bin/bash", "/shell-hook.sh"]
+
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["jupyterhub-singleuser"]
