@@ -98,6 +98,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/matplotlib-base-3.10.9-py312he3d6523_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/minizip-4.2.1-hb71707f_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/muparser-2.3.5-h5888daf_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/linux-64/nb-cli-0.0.8-he64ecbb_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/ncurses-6.6-hdb14827_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/nodejs-24.14.1-h3d65ac4_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/numpy-2.4.4-py312h33ff503_0.conda
@@ -1544,6 +1545,19 @@ packages:
   license_family: MIT
   size: 203174
   timestamp: 1747116762269
+- conda: https://conda.anaconda.org/conda-forge/linux-64/nb-cli-0.0.8-he64ecbb_0.conda
+  sha256: cfb2da3b53068a494daa5353762a8f0201d6db33cfc26d4d1dcfbd8b5705c9f6
+  md5: c1140cffe0acd0dd8648c2e3add6335d
+  depends:
+  - __glibc >=2.17,<3.0.a0
+  - libgcc >=14
+  - openssl >=3.5.6,<4.0a0
+  constrains:
+  - __glibc >=2.17
+  license: BSD-3-Clause
+  license_family: BSD
+  size: 3789967
+  timestamp: 1777061438687
 - conda: https://conda.anaconda.org/conda-forge/linux-64/ncurses-6.6-hdb14827_0.conda
   sha256: fc89f74bbe362fb29fa3c037697a89bec140b346a2469a90f7936d1d7ea4d8a3
   md5: fc21868a1a5aacc937e7a18747acb8a5
