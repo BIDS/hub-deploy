@@ -12,7 +12,7 @@ on:
       - .github/workflows/images.yaml
 env:
   # only publish from this repo, not forks
-  PUBLISHING_REPO: jupyterhealth/jupyterhealth-exchange
+  PUBLISHING_REPO: BIDS/hub-deploy
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 jobs:
@@ -78,6 +78,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
       - name: Generate artifact attestation
+        if: env.REGISTRY == "gcr.io"
         uses: actions/attest@v4
         with:
           subject-name: ${{ env.REGISTRY }}/bids/aifutureshub/user

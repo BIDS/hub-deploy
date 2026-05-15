@@ -1,10 +1,11 @@
 FROM ghcr.io/prefix-dev/pixi:0.68.1 AS build
 
 # copy source code, pixi.toml and pixi.lock to the container
-COPY pixi.toml /srv/pixi.toml
-COPY pixi.lock /srv/pixi.lock
+COPY pixi* /srv/
 WORKDIR /srv/
 RUN pixi install
+COPY *.sh /srv/
+RUN pixi run install-opencode
 # Create the shell-hook bash script to activate the environment
 RUN pixi shell-hook > /shell-hook.sh
 
