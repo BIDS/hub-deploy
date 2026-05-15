@@ -44,6 +44,36 @@ jupyterhub:
       name: ghcr.io/bids/aifutureshub/user
       tag: main
       pullPolicy: Always
+    extraFiles:
+      opencode:
+        mountPath: /etc/opencode/opencode.json
+        data:
+          $schema: "https://opencode.ai/config.json"
+          model: nrp/kimi
+          disabled_providers:
+            - opencode
+          provider:
+            nrp:
+              npm: "@ai-sdk/openai-compatible"
+              name: NRP
+              options:
+                baseURL: "https://ellm.nrp-nautilus.io/v1"
+                apiKey: "{env:OPENAI_API_KEY}"
+              models:
+                kimi:
+                  name: kimi
+                  limit:
+                    "context": 262144
+                    "output": 32768
+                  options:
+                    chat_template_kwargs:
+                      "thinking": true
+                      "preserve_thinking": true
+                  variants:
+                    instruct:
+                      chat_template_kwargs:
+                        thinking: false
+                        preserve_thinking: false
 jupyterhub-home-nfs:
   prometheusExporter:
     enabled: true
