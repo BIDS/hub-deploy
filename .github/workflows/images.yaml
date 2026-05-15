@@ -1,0 +1,85 @@
+name: Publish images
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - images/
+      - .github/workflows/images.yaml
+  pull_request:
+    paths:
+      - images/
+      - .github/workflows/images.yaml
+env:
+  # only publish from this repo, not forks
+  PUBLISHING_REPO: jupyterhealth/jupyterhealth-exchange
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+jobs:
+  push_to_registry:
+    name: Publish container images
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      attestations: write
+      id-token: write
+    services:
+      # So that we can test this in PRs/branches
+      local-registry:
+        image: registry:2
+        ports:
+          - 5000:5000
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
+      - name: Should we push this image to a public registry?
+        shell: python
+        run: |
+          import os
+          repo = os.environ["GITHUB_REPOSITORY"]
+          event = os.environ["GITHUB_EVENT_NAME"]
+          ref = os.environ["GITHUB_REF"]
+          if (
+              repo == "${{ env.PUBLISHING_REPO }}"
+              and event == "push"
+              and (
+                  ref.startswith("refs/tags/")
+                  or ref == "refs/heads/main"
+              )
+          ):
+              print(f"Publishing image to {os.environ['REGISTRY']}")
+          else:
+              # PR or fork, don't push
+              print("Publishing image to local registry")
+              with open(os.environ["GITHUB_ENV"], "a") as f:
+                  f.write(f"REGISTRY=localhost:5000\n")
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
+            type=sha,prefix=
+          images: ${{ env.REGISTRY }}/bids/aifutureshub/user
+      - name: Build and push Docker image
+        id: push
+        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+        with:
+          context: images/user
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+      - name: Generate artifact attestation
+        uses: actions/attest@59d89421af93a897026c735860bf21b6eb4f7b26 # v4
+        with:
+          subject-name: ${{ env.REGISTRY }}/bids/aifutureshub/user
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
