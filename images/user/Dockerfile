@@ -21,7 +21,7 @@ RUN apt-get update \
 ARG UID=1000
 RUN useradd -m -u 1000 jovyan
 COPY --from=build --chown=1000:1000 /srv/.pixi/envs/default /srv/.pixi/envs/default
-RUN cp -v /srv/.pixi/envs/default/etc/profile.d/* /etc/profile.d/
+COPY mamba.sh /etc/profile.d/
 COPY entrypoint.sh /entrypoint.sh
 COPY mambarc /srv/.pixi/envs/default/.condarc
 

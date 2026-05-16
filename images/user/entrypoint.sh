@@ -1,4 +1,3 @@
 #!/usr/bin/bash -l
-set -e
-mamba activate $MAMBA_ROOT_PREFIX
+# make sure it's a login shell, then exec given command
 exec "$@"
