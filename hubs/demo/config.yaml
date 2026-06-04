@@ -11,6 +11,9 @@ jupyterhub:
         public_url: https://aifutureslab-hub.bids.berkeley.edu
       GitHubOAuthenticator:
         oauth_callback_url: https://aifutureslab-hub.bids.berkeley.edu/hub/oauth_callback
+        allowed_users:
+          # collaboration users must be invalid github usernames
+          - _bids-comms
         allowed_organizations:
           - "bids-access:aifutures-hub-users"
         admin_groups:
@@ -20,6 +23,13 @@ jupyterhub:
         scope:
           - "user:email"
           - "read:org"
+    loadRoles:
+      bids-comms:
+        scopes:
+          - admin-ui
+          - servers!user=_bids-comms
+        groups:
+          - bids-comms
     extraConfig:
       team_groups: |
         def access_team_groups(auth_state):
@@ -34,6 +44,37 @@ jupyterhub:
           return access_teams
 
         c.GitHubOAuthenticator.auth_state_groups_key = access_team_groups
+      # mount shared directories for the collaboration groups
+      # these are the _home_ directories of the collaboration accounts
+      shared_directories: |
+        collaboration_groups = {
+            "bids-comms",
+        }
+
+        def mount_collaboration_directories(spawner):
+            if not spawner.volume_mounts:
+                spawner.volume_mounts = {}
+            for group in spawner.user.groups:
+                if group.name in collaboration_groups:
+                    # mount the user's home in shared/$group
+                    # user (home subPath) = _bids-comms
+                    # group = bids-comms
+                    spawner.volume_mounts[group.name] = {
+                        "mountPath": f"/home/jovyan/shared/{group.name}",
+                        "name": "home",
+                        "subPath": "_" + group.name,
+                    }
+        c.Spawner.pre_spawn_hook = mount_collaboration_directories
+      refresh_user: |
+        def refresh_user_hook(authenticator, user, auth_state):
+            if user.name.startswith("_"):
+                # don't require refresh user auth for collaboration and testing accounts
+                # (these aren't github users)
+                return True
+            # for all other users, refresh as usual
+            return None
+
+        c.OAuthenticator.refresh_user_hook = refresh_user_hook
       git_env: |
         # workaround https://github.com/jupyterhub/oauthenticator/pull/820
         def modify_auth_state(authenticator, auth_state):
