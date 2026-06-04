@@ -4,6 +4,8 @@ jupyterhub:
       - aifutureslab-hub.bids.berkeley.edu
   hub:
     config:
+      Authenticator:
+        enable_auth_state: true
       JupyterHub:
         authenticator_class: github
         public_url: https://aifutureslab-hub.bids.berkeley.edu
@@ -16,7 +18,7 @@ jupyterhub:
         manage_groups: true
         populate_teams_in_auth_state: true
         scope:
-          - "read:email"
+          - "user:email"
           - "read:org"
     extraConfig:
       team_groups: |
@@ -32,6 +34,26 @@ jupyterhub:
           return access_teams
 
         c.GitHubOAuthenticator.auth_state_groups_key = access_team_groups
+      git_env: |
+        # workaround https://github.com/jupyterhub/oauthenticator/pull/820
+        def modify_auth_state(authenticator, auth_state):
+            if auth_state.get("scope") and len(auth_state["scope"]) == 1:
+                auth_state["scope"] = auth_state["scope"][0].split(",")
+            return auth_state
+
+        c.GitHubOAuthenticator.modify_auth_state_hook = modify_auth_state
+
+        # populate github env
+        def auth_state_hook(spawner, auth_state):
+            if not auth_state:
+                return
+            github_user = auth_state["github_user"]
+            spawner.env["GITHUB_TOKEN"] = auth_state["access_token"]
+            spawner.env["GIT_AUTHOR_NAME"] = spawner.env["GIT_COMITTER_NAME"] = github_user["name"]
+            if github_user["email"]:
+                spawner.env["EMAIL"] = github_user["email"]
+
+        c.Spawner.auth_state_hook = auth_state_hook
       default_url: |
         def default_url(request):
           if request.current_user and request.current_user.admin:
