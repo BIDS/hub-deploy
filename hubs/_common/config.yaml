@@ -13,12 +13,13 @@ jupyterhub:
         volumeMounts:
           - name: home
             mountPath: /home/jovyan
-            subPath: "{safe_username}"
+            subPath: "{unescaped_username}"
     storage:
       type: static
       static:
         pvcName: home-nfs-mount
-        subPath: "{safe_username}"
+        # don't need safe_username because github usernames are safe
+        subPath: "{unescaped_username}"
     extraEnv:
       JUPYTER_RUNTIME_DIR: "/tmp/jupyter-runtime"
       # XDG_CACHE_DIR: "/tmp/cache"
