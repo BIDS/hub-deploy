@@ -27,7 +27,9 @@ jupyterhub:
       bids-comms:
         scopes:
           - admin-ui
-          - servers!user=_bids-comms
+          - "access:servers!user=_bids-comms"
+          - "admin:servers!user=_bids-comms"
+          - "list:users!user=_bids-comms"
         groups:
           - bids-comms
     extraConfig:
