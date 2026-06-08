@@ -257,6 +257,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-collaboration-ui-2.3.0-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-docprovider-2.4.1-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-lsp-2.3.1-pyhcf101f3_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-resource-usage-1.2.1-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-server-mcp-0.2.1-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_client-8.9.0-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_core-5.9.1-pyhc90fa1f_0.conda
@@ -3613,6 +3614,18 @@ packages:
   license_family: BSD
   size: 61633
   timestamp: 1775136333147
+- conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-resource-usage-1.2.1-pyhd8ed1ab_0.conda
+  sha256: 7935959298800fa60fce96b71e1747c27af3eacd061feff0bb92f400f763bd80
+  md5: f6ea980ad873115c6ee41edf7b9db436
+  depends:
+  - jupyter_server >=2.0.0,<3
+  - psutil >=5.6.0
+  - python >=3.10
+  - pyzmq >=19
+  license: BSD-3-Clause
+  license_family: BSD
+  size: 43736
+  timestamp: 1774986387013
 - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-server-mcp-0.2.1-pyhcf101f3_0.conda
   sha256: f1fad77da107996f73483d3f6ab649499bd23677f1ec960fdf59649dc2cacddd
   md5: 4ae340d1d922b87fede339c8f09a207e
