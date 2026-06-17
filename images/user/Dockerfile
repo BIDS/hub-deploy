@@ -26,10 +26,11 @@ COPY entrypoint.sh /entrypoint.sh
 COPY mambarc /srv/.pixi/envs/default/.condarc
 
 ENV PYTHONUNBUFFERED=1 \
-    MAMBA_ROOT_PREFIX=/srv/.pixi/envs/default
+    MAMBA_ROOT_PREFIX=/srv/.pixi/envs/default \
+    PATH=/srv/.pixi/envs/default:$PATH \
+    SHELL=/usr/bin/bash
 WORKDIR /home/jovyan
 USER $UID
-
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["jupyterhub-singleuser"]
