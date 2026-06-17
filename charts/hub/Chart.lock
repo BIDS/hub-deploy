@@ -1,9 +1,9 @@
 dependencies:
 - name: jupyterhub
   repository: https://jupyterhub.github.io/helm-chart
-  version: 4.3.1
+  version: 4.4.0
 - name: jupyterhub-home-nfs
   repository: oci://ghcr.io/2i2c-org/jupyterhub-home-nfs
   version: 1.2.0
-digest: sha256:07a45b03b70b60d7869dfad1cfcf32c8ef672067ed0c6484d1fe35b843702de4
-generated: "2025-11-04T20:47:30.318423-08:00"
+digest: sha256:4b20d0accfb5ff4ed703764dbde633079d4f80b77879d775c0c96747c85b7663
+generated: "2026-06-17T10:26:21.942668-07:00"
