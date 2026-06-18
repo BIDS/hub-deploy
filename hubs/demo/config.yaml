@@ -109,9 +109,11 @@ jupyterhub:
       name: ghcr.io/bids/aifutureshub/user
       tag: main
       pullPolicy: Always
+    extraEnv:
+      OPENCODE_CONFIG: /etc/opencode-default/opencode.json
     extraFiles:
       opencode:
-        mountPath: /etc/opencode/opencode.json
+        mountPath: /etc/opencode-default/opencode.json
         data:
           $schema: "https://opencode.ai/config.json"
           model: nrp/qwen3
