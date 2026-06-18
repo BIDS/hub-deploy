@@ -2,6 +2,7 @@ FROM ghcr.io/prefix-dev/pixi:0.68.1 AS build
 
 # copy source code, pixi.toml and pixi.lock to the container
 COPY pixi* /srv/
+COPY jupyter-ai-biorouter-acp /srv/jupyter-ai-biorouter-acp
 WORKDIR /srv/
 RUN pixi install
 COPY install-opencode.sh /srv/
@@ -15,7 +16,11 @@ RUN apt-get update \
         git \
         nano \
         procps \
-        vim \ 
+        vim \
+        wget \
+ && wget https://github.com/BaranziniLab/biorouter/releases/download/v1.85.2/biorouter-cli_1.85.2_amd64.deb \
+ && apt -y install ./biorouter*.deb \
+ && rm -f biorouter*.deb \
  && rm -rf /var/lib/apt/lists/*
  
 ARG UID=1000
@@ -26,10 +31,11 @@ COPY entrypoint.sh /entrypoint.sh
 COPY mambarc /srv/.pixi/envs/default/.condarc
 
 ENV PYTHONUNBUFFERED=1 \
-    MAMBA_ROOT_PREFIX=/srv/.pixi/envs/default
+    MAMBA_ROOT_PREFIX=/srv/.pixi/envs/default \
+    PATH=/srv/.pixi/envs/default:$PATH \
+    SHELL=/usr/bin/bash
 WORKDIR /home/jovyan
 USER $UID
-
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["jupyterhub-singleuser"]
