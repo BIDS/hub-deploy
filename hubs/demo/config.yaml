@@ -7,8 +7,25 @@ jupyterhub:
       Authenticator:
         enable_auth_state: true
       JupyterHub:
+        # authenticator_class: generic-oauth
         authenticator_class: github
         public_url: https://aifutureslab-hub.bids.berkeley.edu
+      GenericOAuthenticator:
+        login_service: CalNet
+        username_claim: sub
+        oauth_callback_url: https://aifutureslab-hub.bids.berkeley.edu/hub/oauth_callback
+        authorize_url: https://auth.berkeley.edu/cas/oidc/oidcAuthorize
+        token_url: https://auth.berkeley.edu/cas/oidc/oidcAccessToken
+        userdata_url: https://auth.berkeley.edu/cas/oidc/oidcProfile
+        allowed_users:
+          # collaboration users must be invalid github usernames
+          - _bids-comms
+        admin_users:
+          - minrk
+        scope:
+          - openid
+          - profile
+          - berkeley_edu_default
       GitHubOAuthenticator:
         oauth_callback_url: https://aifutureslab-hub.bids.berkeley.edu/hub/oauth_callback
         allowed_users:

@@ -1,2 +1,5 @@
 creation_rules:
   - gcp_kms: projects/bids-jupyterhub/locations/global/keyRings/sops/cryptoKeys/sops-key
+stores:
+  yaml:
+    indent: 2
