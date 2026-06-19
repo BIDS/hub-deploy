@@ -7,30 +7,55 @@ jupyterhub:
       Authenticator:
         enable_auth_state: true
       JupyterHub:
-        # authenticator_class: generic-oauth
-        authenticator_class: github
+        authenticator_class: cilogon
+        # authenticator_class: github
         public_url: https://aifutureslab-hub.bids.berkeley.edu
+      OAuthenticator:
+        oauth_callback_url: https://aifutureslab-hub.bids.berkeley.edu/hub/oauth_callback
+      CILogonOAuthenticator:
+        scope:
+          - openid
+          - email
+          - profile
+          - org.cilogon.userinfo
+        idps:
+          urn:mace:incommon:berkeley.edu:
+            default: true
+            username_derivation:
+              username_claim: eppn
+          urn:mace:incommon:ucdavis.edu:
+            username_derivation:
+              username_claim: eppn
+          urn:mace:incommon:ucsf.edu:
+            username_derivation:
+              username_claim: eppn
+          http://github.com/login/oauth/authorize:
+            username_derivation:
+              username_claim: preferred_username
+              action: prefix
+              prefix: github
       GenericOAuthenticator:
+        login_service: CalNet
+        username_claim: sub
+        authorize_url: https://auth.berkeley.edu/cas/oidc/oidcAuthorize
+        token_url: https://auth.berkeley.edu/cas/oidc/oidcAccessToken
+        userdata_url: https://auth.berkeley.edu/cas/oidc/oidcProfile
+        scope:
+          - openid
+          - profile
+          - berkeley_edu_default
+      GenericOAuthenticator_calnet:
         login_service: CalNet
         username_claim: sub
         oauth_callback_url: https://aifutureslab-hub.bids.berkeley.edu/hub/oauth_callback
         authorize_url: https://auth.berkeley.edu/cas/oidc/oidcAuthorize
         token_url: https://auth.berkeley.edu/cas/oidc/oidcAccessToken
         userdata_url: https://auth.berkeley.edu/cas/oidc/oidcProfile
-        allowed_users:
-          # collaboration users must be invalid github usernames
-          - _bids-comms
-        admin_users:
-          - minrk
         scope:
           - openid
           - profile
           - berkeley_edu_default
       GitHubOAuthenticator:
-        oauth_callback_url: https://aifutureslab-hub.bids.berkeley.edu/hub/oauth_callback
-        allowed_users:
-          # collaboration users must be invalid github usernames
-          - _bids-comms
         allowed_organizations:
           - "bids-access:aifutures-hub-users"
         admin_groups:
@@ -40,15 +65,6 @@ jupyterhub:
         scope:
           - "user:email"
           - "read:org"
-    loadRoles:
-      bids-comms:
-        scopes:
-          - admin-ui
-          - "access:servers!user=_bids-comms"
-          - "admin:servers!user=_bids-comms"
-          - "list:users!user=_bids-comms"
-        groups:
-          - bids-comms
     extraConfig:
       team_groups: |
         def access_team_groups(auth_state):
@@ -66,27 +82,37 @@ jupyterhub:
       # mount shared directories for the collaboration groups
       # these are the _home_ directories of the collaboration accounts
       shared_directories: |
-        collaboration_groups = {
-            "bids-comms",
-        }
+        import json
+
+        with open("/etc/jupyterhub/access.json") as f:
+            access = json.load(f)
 
         def mount_collaboration_directories(spawner):
             if not spawner.volume_mounts:
                 spawner.volume_mounts = {}
             for group in spawner.user.groups:
-                if group.name in collaboration_groups:
+                if group.name.endswith("@collaboration"):
+                    name, *_ = group.name.rpartition("@")
                     # mount the user's home in shared/$group
-                    # user (home subPath) = _bids-comms
-                    # group = bids-comms
+                    # user (home subPath) = bids-comms@collaboration
+                    # group = bids-comms@collaboration
                     spawner.volume_mounts[group.name] = {
-                        "mountPath": f"/home/jovyan/shared/{group.name}",
+                        "mountPath": f"/home/jovyan/shared/{name}",
                         "name": "home",
-                        "subPath": "_" + group.name,
+                        "subPath": group.name,
                     }
+            if spawner.user.admin:
+                # admins can manage the shared home directory
+                spawner.volume_mounts["admin-home"] = {
+                    # don't put this in the jupyter root
+                    "mountPath": f"/home/all-home",
+                    "name": "home",
+                }
+
         c.Spawner.pre_spawn_hook = mount_collaboration_directories
       refresh_user: |
         def refresh_user_hook(authenticator, user, auth_state):
-            if user.name.startswith("_"):
+            if user.name.endswith("@collaboration"):
                 # don't require refresh user auth for collaboration and testing accounts
                 # (these aren't github users)
                 return True
@@ -113,7 +139,7 @@ jupyterhub:
             if github_user["email"]:
                 spawner.env["EMAIL"] = github_user["email"]
 
-        c.Spawner.auth_state_hook = auth_state_hook
+        # c.Spawner.auth_state_hook = auth_state_hook
       default_url: |
         def default_url(request):
           if request.current_user and request.current_user.admin:
@@ -121,6 +147,56 @@ jupyterhub:
           return '/hub/spawn'
 
         c.JupyterHub.default_url = default_url
+      cilogon_groups: |
+        import json
+
+        with open("/etc/jupyterhub/access.json") as f:
+            access = json.load(f)
+
+        c.OAuthenticator.admin_users = set(access["admin_users"])
+        c.OAuthenticator.allowed_users = allowed_users = set(access["allowed_users"])
+
+        collab_groups = {}
+        for name, users in access["collaborations"].items():
+          collab_username = f"{name}@collaboration"
+          c.JupyterHub.load_roles.append({
+            "name": collab_username.replace("@", "-"),
+            "groups": [collab_username],
+            "scopes": [
+              "admin-ui",
+              f"list:users!user={collab_username}",
+              f"access:servers!user={collab_username}",
+              f"admin:servers!user={collab_username}",
+            ]
+          })
+          # define group membership while we're here
+          for username in users:
+            collab_groups.setdefault(username, []).append(collab_username)
+            # grant access to users in collaborations
+            # avoids need to duplicate listing in allowed_users
+            allowed_users.add(username)
+
+          allowed_users.add(f"{name}@collaboration")
+
+        from jupyterhub.app import JupyterHub
+
+        def collaboration_groups(auth_state):
+          # we only get auth state here, not username
+          # recompute username for group lookup
+          # FIXME: this should be easier??
+          authenticator = JupyterHub.instance().authenticator
+          username = authenticator.user_info_to_username(auth_state["cilogon_user"])
+          groups = collab_groups.get(username, [])
+          authenticator.log.info(f"Loading groups for {username}: {groups}")
+          return groups
+
+        c.CILogonOAuthenticator.auth_state_groups_key = collaboration_groups
+        c.OAuthenticator.manage_groups = True
+        print(c.OAuthenticator.allowed_users)
+    extraFiles:
+      access:
+        mountPath: /etc/jupyterhub/access.json
+        # data in config.enc.yaml
   singleuser:
     image:
       name: ghcr.io/bids/aifutureshub/user
