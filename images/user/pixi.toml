@@ -39,6 +39,7 @@ jq = "*"
 jupyter-resource-usage = "*"
 uv = "*"
 jupyter-server-proxy = "*"
+jupyter-myst-build-proxy = ">=0.6.0,<0.7"
 
 [pypi-dependencies]
 jupyter-ai-biorouter-acp = { path = "jupyter-ai-biorouter-acp" }
