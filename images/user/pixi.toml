@@ -38,6 +38,7 @@ gh-scoped-creds = "*"
 jq = "*"
 jupyter-resource-usage = "*"
 uv = "*"
+jupyter-server-proxy = "*"
 
 [pypi-dependencies]
 jupyter-ai-biorouter-acp = { path = "jupyter-ai-biorouter-acp" }
