@@ -18,9 +18,6 @@ RUN apt-get update \
         procps \
         vim \
         wget \
- && wget https://github.com/BaranziniLab/biorouter/releases/download/v1.85.2/biorouter-cli_1.85.2_amd64.deb \
- && apt -y install ./biorouter*.deb \
- && rm -f biorouter*.deb \
  && rm -rf /var/lib/apt/lists/*
  
 ARG UID=1000
