@@ -7,5 +7,8 @@ curl -s -L https://github.com/anomalyco/opencode/releases/download/${OPENCODE_VE
 test -f $CONDA_PREFIX/bin/opencode
 
 BIOROUTER_VERSION=v1.87.1
-curl -s -L https://github.com/BaranziniLab/biorouter/releases/download/${BIOROUTER_VERSION}/biorouter-headless-${platform}.tar.gz | tar -xzv --strip 1 -C "$CONDA_PREFIX" headless-${platform}/bin
+curl -s -L https://github.com/BaranziniLab/biorouter/releases/download/${BIOROUTER_VERSION}/biorouter-headless-${platform}.tar.gz | tar -xzv --strip 1 -C "$CONDA_PREFIX"
 test -f $CONDA_PREFIX/bin/biorouter
+# fix and verify rpath to lookup libxcb
+patchelf --set-rpath '$ORIGIN/../lib' $CONDA_PREFIX/bin/biorouter
+biorouter --help

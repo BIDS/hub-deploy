@@ -5,6 +5,10 @@ COPY pixi* /srv/
 COPY jupyter-ai-biorouter-acp /srv/jupyter-ai-biorouter-acp
 WORKDIR /srv/
 RUN pixi install
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
+        patchelf \
+ && rm -rf /var/lib/apt/lists/*
 COPY install-opencode.sh /srv/
 RUN pixi run install-opencode
 
