@@ -255,4 +255,6 @@ jupyterhub-home-nfs:
     enabled: true
     volumeId: projects/bids-jupyterhub/zones/us-central1-a/disks/hub-nfs-demo
   quotaEnforcer:
+    # disable broken quota enforcer
+    enabled: false
     hardQuota: "10" # in GiB
