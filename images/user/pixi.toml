@@ -42,6 +42,8 @@ jupyter-server-proxy = "*"
 jupyter-myst-build-proxy = "*"
 unzip = "*"
 ipycytoscape = "*"
+jupyter-vscode-proxy = "*"
+code-server = "*"
 
 [pypi-dependencies]
 jupyter-ai-biorouter-acp = { path = "jupyter-ai-biorouter-acp" }
