@@ -36,6 +36,15 @@ module "gke_cluster" {
   }
 }
 
+module "lightcone" {
+  source               = "../../modules/lightcone"
+  name                 = local.name
+  user_service_account = "${local.name}-hub-user"
+  reader_service_accounts = [
+    module.gke_cluster.service_accounts["gke-node"],
+  ]
+}
+
 resource "google_container_node_pool" "user" {
   name     = "user-202510"
   cluster  = module.gke_cluster.cluster.id
@@ -53,6 +62,11 @@ resource "google_container_node_pool" "user" {
   }
 
   node_config {
+    # See tf/modules/gke_cluster: required with Workload Identity.
+    workload_metadata_config {
+      mode = "GKE_METADATA"
+    }
+
     machine_type = "e2-highmem-8"
     disk_size_gb = 100
     disk_type    = "pd-balanced"

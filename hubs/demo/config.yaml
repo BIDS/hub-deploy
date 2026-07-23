@@ -198,6 +198,11 @@ jupyterhub:
         mountPath: /etc/jupyterhub/access.json
         # data in config.enc.yaml
   singleuser:
+    # match lightcone.user_service_account
+    serviceAccountName: demo-hub-user
+    cloudMetadata:
+      # needed for workload identity
+      blockWithIptables: false
     image:
       name: ghcr.io/bids/aifutureshub/user
       tag: main
