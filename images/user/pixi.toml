@@ -61,6 +61,7 @@ rapidfuzz = "*"
 pypdf = "*"
 httpx = "*"
 linkml-runtime = "*"
+dask-gateway = "*"
 
 
 [pypi-dependencies]
