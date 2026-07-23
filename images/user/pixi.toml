@@ -66,4 +66,4 @@ dask-gateway = "*"
 
 [pypi-dependencies]
 jupyter-ai-biorouter-acp = { path = "jupyter-ai-biorouter-acp" }
-lightcone-cli = ">=0.3.7"
+lightcone-cli = { git = "https://github.com/LightconeResearch/lightcone-cli.git", rev = "jupyterhub-gateway-cloudbuild" }
