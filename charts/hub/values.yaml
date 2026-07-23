@@ -65,3 +65,5 @@ jupyterhub:
     corePods:
       nodeAffinity:
         matchNodePurpose: require
+dask-gateway:
+  enabled: false

@@ -541,7 +541,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/zict-3.0.0-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/zipp-4.1.0-pyhcf101f3_0.conda
       - pypi: ./jupyter-ai-biorouter-acp
-      - pypi: https://files.pythonhosted.org/packages/9f/a7/8e4e093412dd0b19a0a37cafcf9a7d87d117bb458ad89234b7023aa91aeb/lightcone_cli-0.3.7-py3-none-any.whl
+      - pypi: git+https://github.com/LightconeResearch/lightcone-cli.git?rev=jupyterhub-gateway-cloudbuild#a45e432b953c2b55aad60a2c371b6b5dafc32921
       - pypi: https://files.pythonhosted.org/packages/d0/ed/fab5578f3949344b73cbc7b40fb4fbee83052fc1fa860fd4f9153eb31d70/astra_tools-0.2.10-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/f7/51/f47378ac7b535605c076bb396e78ee746e3f9646d6c5678ad27d65678c49/astra_spec-0.0.11-py3-none-any.whl
 packages:
@@ -8969,13 +8969,13 @@ packages:
   requires_dist:
   - jupyter-ai-acp-client
   requires_python: '>=3.11'
-- pypi: https://files.pythonhosted.org/packages/9f/a7/8e4e093412dd0b19a0a37cafcf9a7d87d117bb458ad89234b7023aa91aeb/lightcone_cli-0.3.7-py3-none-any.whl
+- pypi: git+https://github.com/LightconeResearch/lightcone-cli.git?rev=jupyterhub-gateway-cloudbuild#a45e432b953c2b55aad60a2c371b6b5dafc32921
   name: lightcone-cli
-  version: 0.3.7
-  sha256: cf151e1a5538594c9ad072bedc99223f3113d3422981723869be153d3e13dba0
+  version: 0.3.8.dev9+ga45e432b9
   requires_dist:
   - astra-tools>=0.2.10
   - click>=8.0
+  - dask-gateway>=2024.1
   - dask>=2024.1
   - distributed>=2024.1
   - jinja2>=3.0
