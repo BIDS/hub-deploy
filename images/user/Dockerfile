@@ -1,4 +1,6 @@
 FROM ghcr.io/prefix-dev/pixi:0.68.1 AS build
+# git needed for dev lightcone
+RUN pixi global install git
 
 # copy source code, pixi.toml and pixi.lock to the container
 COPY pixi* /srv/
