@@ -367,6 +367,7 @@ dask-gateway:
         c.JupyterHubAuthenticator.jupyterhub_service_name = "dask-gateway"
       lightcone: |
         from dask_gateway_server.options import Options, Integer, Float, Mapping, String
+        from traitlets.log import get_logger
 
         # Chart-values container config (imagePullPolicy above). Handler-
         # returned fields REPLACE the KubeClusterConfig traitlets, so
@@ -399,7 +400,9 @@ dask-gateway:
             # by `lc run` itself through the standard `environment`
             # option — the only deployment-specific piece left is the
             # per-user home mount below.
-            return {
+            log = get_logger()
+
+            handled_options = {
                 "worker_cores": options.worker_cores,
                 "worker_memory": f"{options.worker_memory:.2f}G",
                 "image": options.image,
@@ -407,6 +410,30 @@ dask-gateway:
                 "scheduler_extra_container_config": _with_home(_scheduler_ct, user.name),
                 "environment": options.environment,
             }
+            # allow over-subscribing CPU
+            # try to match node flavor ratio (4:1 standard, 8:1 highmem, 2:1 highcpu)
+            mem_cpu_ratio = 4
+            core_limit = options.worker_cores
+            cpu_per_mem = options.worker_memory / mem_cpu_ratio
+            if core_limit > 1 and core_limit > cpu_per_mem:
+                # if asking for a high cpu:memory ratio, oversubscribed cpu
+                # use requested worker_cores as the limit and threads, but not the request
+                # for request, use highest of:
+                # - node native cpu:memory ratio
+                # - half limit (requesting 4 cpu will never reserve less than 2)
+                # - 1 (never less than a full cpu)
+
+                scaled_cores = max(
+                    cpu_per_mem,
+                    core_limit / 2,
+                    1,
+                )
+                log.info("oversubscribing cpu=%.1f/%.1f for mem=%.1fG", scaled_cores, core_limit, options.worker_memory)
+                handled_options["worker_cores_limit"] = core_limit
+                handled_options["worker_threads"] = max(round(core_limit), 1)
+                handled_options["worker_cores"] = scaled_cores
+
+            return handled_options
 
         c.Backend.cluster_options = Options(
             Integer("worker_cores", default=2, min=1, max=8, label="Worker cores"),
