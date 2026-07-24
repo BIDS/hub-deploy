@@ -62,6 +62,18 @@ resource "google_container_cluster" "cluster" {
 
   network = google_compute_network.vpc.name
 
+  # enable network policy with calico
+  network_policy {
+    enabled  = true
+    provider = "CALICO"
+  }
+
+  addons_config {
+    network_policy_config {
+      disabled = false
+    }
+  }
+
   # terraform recommends removing the default node pool
   remove_default_node_pool = true
   initial_node_count       = 1
