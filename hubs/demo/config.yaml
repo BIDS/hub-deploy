@@ -374,6 +374,12 @@ dask-gateway:
             # the same path as the notebook pod, so dask tasks see
             # identical absolute paths. subPath matches z2jh's storage
             # subPath "{unescaped_username}".
+            if username.startswith("user:"):
+                # dask gateway applies `user:` to usernames that contain a colon,
+                # to avoid collisions,
+                # which github usernames do in our deployment.
+                # get the 'true' username back.
+                username = username.partition(":")[2]
             mounts = list(container_config.get("volumeMounts", [])) + [
                 {"name": "home", "mountPath": "/home/jovyan", "subPath": username},
             ]
