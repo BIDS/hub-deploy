@@ -332,7 +332,7 @@ dask-gateway:
           # land on the core node alongside the hub/proxy. No toleration
           # needed — the pools carry labels, not taints.
           nodeSelector:
-            hub.jupyter.org/node-purpose: user
+            hub.jupyter.org/node-purpose: dask
           volumes:
             - name: home
               persistentVolumeClaim:
@@ -352,7 +352,7 @@ dask-gateway:
       worker:
         extraPodConfig:
           nodeSelector:
-            hub.jupyter.org/node-purpose: user
+            hub.jupyter.org/node-purpose: dask
           volumes:
             - name: home
               persistentVolumeClaim:
