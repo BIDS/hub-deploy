@@ -21,6 +21,7 @@ RUN apt-get update \
         ca-certificates \
         git \
         nano \
+        openssh-server \
         procps \
         vim \
         wget \
