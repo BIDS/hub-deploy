@@ -36,7 +36,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - name: Should we push this image to a public registry?
@@ -62,7 +62,7 @@ jobs:
                   f.write(f"REGISTRY=localhost:5000\n")
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@703896b4f30f62d53f5530a80bcdc589a3f702bc
+        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
         with:
           tags: |
             type=ref,event=branch
@@ -71,14 +71,14 @@ jobs:
           images: ${{ env.REGISTRY }}/bids/aifutureshub/user
       - name: Login to the Container registry
         if: env.REGISTRY == 'ghcr.io'
-        uses: docker/login-action@9f4a8ea54ed9055d5f86c993e1f2ffa674f98344
+        uses: docker/login-action@abd2ef45e78c5afb21d64d4ca52ee8550d9572c7 # v4.5.1
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
         id: push
-        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
         with:
           context: images/user
           push: true
