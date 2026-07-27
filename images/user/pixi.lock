@@ -253,7 +253,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zlib-ng-2.3.3-hceb46e0_1.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zstd-1.5.7-hb78ec9c_6.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/_python_abi3_support-1.0-hd8ed1ab_3.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/agent-client-protocol-0.9.0-pyhcf101f3_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/agent-client-protocol-0.11.0-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/aiofile-3.11.1-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/aiohappyeyeballs-2.7.1-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/aiosignal-1.4.0-pyhd8ed1ab_0.conda
@@ -370,12 +370,12 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/jsonschema-path-0.5.0-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jsonschema-specifications-2025.9.1-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jsonschema-with-format-nongpl-4.26.0-hcf101f3_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-3.0.1-pyhcf101f3_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-acp-client-0.1.5-pyhcf101f3_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-3.1.0-pyhcf101f3_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-acp-client-0.2.0-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-chat-commands-0.0.4-pyhcf101f3_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-persona-manager-0.0.12-pyhcf101f3_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-persona-manager-0.1.2-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-router-0.0.5-pyhcf101f3_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-tools-0.5.2-pyhcf101f3_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-tools-0.6.1-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-book-2.1.6-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-builder-1.1.1-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-collaboration-4.4.0-pyhcf101f3_0.conda
@@ -392,7 +392,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_core-5.9.1-pyhc90fa1f_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_events-0.12.1-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_server-2.20.0-pyhcf101f3_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_server_documents-0.2.5-pyhc364b38_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_server_documents-0.3.1-pyhc364b38_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_server_fileid-0.9.2-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_server_terminals-0.5.4-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_server_ydoc-2.4.0-pyhcf101f3_0.conda
@@ -400,7 +400,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyterhub-base-5.5.0-pyhc90fa1f_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyterhub-singleuser-5.5.0-hb42b831_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyterlab-4.6.2-pyhd8ed1ab_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/jupyterlab-chat-0.22.1-pyhc364b38_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/jupyterlab-chat-0.23.0-pyhc364b38_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyterlab-commands-toolkit-0.1.6-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyterlab-eventlistener-0.4.0-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyterlab-git-0.54.0-pyh6e2b5a4_0.conda
@@ -1718,7 +1718,7 @@ packages:
   license: MIT
   license_family: MIT
   purls:
-  - pkg:pypi/greenlet?source=compressed-mapping
+  - pkg:pypi/greenlet?source=hash-mapping
   run_exports: {}
   size: 266770
   timestamp: 1782524633116
@@ -4685,9 +4685,9 @@ packages:
   run_exports: {}
   size: 8144
   timestamp: 1784221492234
-- conda: https://conda.anaconda.org/conda-forge/noarch/agent-client-protocol-0.9.0-pyhcf101f3_0.conda
-  sha256: 6ed3a564f4f08b2882e327caa90b63111a3747857f52314c9be3658a56af420d
-  md5: 24940b6330f230ec3990247e6ebacc0f
+- conda: https://conda.anaconda.org/conda-forge/noarch/agent-client-protocol-0.11.0-pyhcf101f3_0.conda
+  sha256: f4fd6e6ef40e68e4e26fc152e274e96b8e35c2f6045fd370be49fac3422d7bb2
+  md5: 5d5fdca7e688865037b0a0eeb52289fc
   depends:
   - python >=3.10
   - pydantic >=2.7
@@ -4697,8 +4697,8 @@ packages:
   purls:
   - pkg:pypi/agent-client-protocol?source=hash-mapping
   run_exports: {}
-  size: 54753
-  timestamp: 1774511663449
+  size: 62977
+  timestamp: 1783319518507
 - conda: https://conda.anaconda.org/conda-forge/noarch/aiofile-3.11.1-pyhd8ed1ab_0.conda
   sha256: 12013ebd66151131658452d2f4d152b26204f66e43b4aff1edde2cadc3f2514f
   md5: b02a4a7d17177af53b19eb4169e53726
@@ -6413,19 +6413,19 @@ packages:
   run_exports: {}
   size: 4740
   timestamp: 1767839954258
-- conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-3.0.1-pyhcf101f3_0.conda
-  sha256: 073638abf051222ffffb327ea18a5164b4e200a171507c1f0aea6c36efb704a0
-  md5: 833ee29a7fbd74786563ba51c802c569
+- conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-3.1.0-pyhcf101f3_0.conda
+  sha256: 66daec04c0f0c792b282cbe42cbb4242d737d010f50f4dcb3c2d8c2565a4048d
+  md5: 27ecd9a35ca99e6ec42b63c493a9d50d
   depends:
   - python >=3.10
-  - jupyter-ai-acp-client >=0.1.5,<0.2.0
+  - jupyter-ai-acp-client >=0.2.0,<0.3.0
   - jupyter-ai-chat-commands >=0.0.4,<0.1.0
-  - jupyter-ai-persona-manager >=0.0.11,<0.1.0
+  - jupyter-ai-persona-manager >=0.1.2,<0.2.0
   - jupyter-ai-router >=0.0.5,<0.1.0
-  - jupyter-ai-tools >=0.5.2,<0.6.0
-  - jupyter_server_documents >=0.2.5,<0.3.0
-  - jupyter-server-mcp >=0.2.1,<0.3.0
-  - jupyterlab-chat >=0.22.1,<0.23.0
+  - jupyter-ai-tools >=0.6.1,<0.7.0
+  - jupyter_server_documents >=0.3.1,<0.4.0
+  - jupyter-server-mcp >=0.2.1,<0.4.0
+  - jupyterlab-chat >=0.23.0,<0.24.0
   - jupyterlab-commands-toolkit >=0.1.6,<0.2.0
   - jupyterlab-notebook-awareness >=0.2.0,<0.3.0
   - python
@@ -6434,17 +6434,17 @@ packages:
   purls:
   - pkg:pypi/jupyter-ai?source=hash-mapping
   run_exports: {}
-  size: 25415
-  timestamp: 1782921506421
-- conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-acp-client-0.1.5-pyhcf101f3_0.conda
-  sha256: 9fb75349d994688410d6d58320f7f4a0059100757a2dd71e7fe382551a5df3f5
-  md5: c766cc8e0b7f4c456efdfb163565b6ba
+  size: 25482
+  timestamp: 1784847268426
+- conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-acp-client-0.2.0-pyhcf101f3_0.conda
+  sha256: adec202f0acbe9c1f607358d3a30c231efb3a954f68e7ae0f7174f2ab1c01244
+  md5: e78a81f2fba270f2724cb8bfa51c7303
   depends:
   - python >=3.10
-  - agent-client-protocol >=0.9.0,<0.10.0
-  - jupyter-ai-persona-manager >=0.0.9
+  - agent-client-protocol >=0.11.0,<0.12.0
+  - jupyter-ai-persona-manager >=0.1.0
   - jupyter_server >=2.4.0,<3
-  - jupyterlab-chat >=0.20.0
+  - jupyterlab-chat >=0.23.0
   - pydantic >=2,<3
   - python
   license: BSD-3-Clause
@@ -6452,8 +6452,8 @@ packages:
   purls:
   - pkg:pypi/jupyter-ai-acp-client?source=hash-mapping
   run_exports: {}
-  size: 128251
-  timestamp: 1779306588390
+  size: 118839
+  timestamp: 1784824349051
 - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-chat-commands-0.0.4-pyhcf101f3_0.conda
   sha256: dce6410f36d35061ef854eea7b84973b47ab4c9c65adc4c77db947166c8e9a47
   md5: 5be7e0c60e4ce917ec40f51d0d16c9c2
@@ -6471,16 +6471,16 @@ packages:
   run_exports: {}
   size: 61913
   timestamp: 1774290838444
-- conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-persona-manager-0.0.12-pyhcf101f3_0.conda
-  sha256: dfb7dbeb31d2ca4b2e606c9b29a8db67abea1051f204aceaa607554b62be222a
-  md5: 2c3ff3ff7a51d05e343ceba02aee9c31
+- conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-persona-manager-0.1.2-pyhcf101f3_0.conda
+  sha256: a8714f99c45eb1300a4d65c9499f12a85a5156f516bf6d12290acec8fceeaa79
+  md5: 932f9276eda83b5b146615787924a62f
   depends:
   - python >=3.10
   - importlib-metadata >=4.0.0
   - jupyter-ai-router >=0.0.4a0
   - jupyter_server_fileid >=0.9.0
   - jupyter_server >=2.4.0,<3
-  - jupyterlab-chat >=0.19.0
+  - jupyterlab-chat >=0.23.0
   - pycrdt >=0.10.0
   - pydantic >=2.0.0
   - python
@@ -6489,8 +6489,8 @@ packages:
   purls:
   - pkg:pypi/jupyter-ai-persona-manager?source=hash-mapping
   run_exports: {}
-  size: 58643
-  timestamp: 1783557526176
+  size: 138546
+  timestamp: 1784842606278
 - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-router-0.0.5-pyhcf101f3_0.conda
   sha256: 462ff8301b661db38087799608ebd3219e3c361152c28326e54e22b95a72ca6c
   md5: 22f101624095439b06bbc9b94aa05a44
@@ -6506,13 +6506,13 @@ packages:
   run_exports: {}
   size: 43268
   timestamp: 1777527312949
-- conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-tools-0.5.2-pyhcf101f3_0.conda
-  sha256: e486f8ee8145f7fe2f7bd74cfd892f3bdb32c53c4862956b43ea848ef9dec40d
-  md5: f9b8892bfc4a538414a7ebd4c698545a
+- conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-tools-0.6.1-pyhcf101f3_0.conda
+  sha256: 9e73cb4595bd05f606a0c9b4662764bc6fa61f1232ae0eacca699247b08f504f
+  md5: 239967d58bcf3dca65280fcb24d75176
   depends:
   - python >=3.10
   - jupyter_server >=1.6,<3
-  - jupyter_ydoc >=3.0.0,<4.0.0
+  - jupyter_ydoc >=3.0.0
   - pycrdt
   - python
   license: BSD-3-Clause
@@ -6520,8 +6520,8 @@ packages:
   purls:
   - pkg:pypi/jupyter-ai-tools?source=hash-mapping
   run_exports: {}
-  size: 30839
-  timestamp: 1780651489630
+  size: 31070
+  timestamp: 1784752851939
 - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-book-2.1.6-pyhcf101f3_0.conda
   sha256: b3b05981d9fb448f28251cc73d5e50dda3075923a054bef1a03441946d4cb62d
   md5: 5e9256929d2b921a066c0eef65bfe354
@@ -6801,24 +6801,25 @@ packages:
   run_exports: {}
   size: 363068
   timestamp: 1781713810089
-- conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_server_documents-0.2.5-pyhc364b38_0.conda
-  sha256: d2ee4236e94e0f6d71f71d1309e40047a337d52c068cba65bbd1705ce9cd34cb
-  md5: 0d6bf4d66bb2dc579d62f74b7dc85c17
+- conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_server_documents-0.3.1-pyhc364b38_0.conda
+  sha256: 8a1f00a17f5900ae770fc252fe2022e8c583e88709f01aa78a66959f87c84bb0
+  md5: 7942f482cea1a08c9fe95f1728c6e852
   depends:
   - python >=3.9
-  - jupyter-collaboration-ui >=2.0.2,<3
+  - jupyter-collaboration-ui >=2.4.0,<4
+  - jupyter-docprovider >=2.4.0,<4
   - jupyter_server >=2.4.0,<3
   - jupyter_server_fileid >=0.9.0,<0.10.0
   - pycrdt >=0.12.49
-  - jupyter_ydoc >=3.0.0,<4.0.0
+  - jupyter_ydoc >=3.0.0,<5.0.0
   - python
   license: BSD-3-Clause
   license_family: BSD
   purls:
   - pkg:pypi/jupyter-server-documents?source=hash-mapping
   run_exports: {}
-  size: 230706
-  timestamp: 1781733888432
+  size: 237018
+  timestamp: 1784752766839
 - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_server_fileid-0.9.2-pyhd8ed1ab_1.conda
   sha256: 6dd56e62edb1ad42bdacf4d32d9aeae5c85f7756e9a3a21eb15598a6fdff4d13
   md5: fbf0a308ddc042202a005a1760524823
@@ -6954,23 +6955,23 @@ packages:
   run_exports: {}
   size: 14035048
   timestamp: 1784641255275
-- conda: https://conda.anaconda.org/conda-forge/noarch/jupyterlab-chat-0.22.1-pyhc364b38_0.conda
-  sha256: 3a3b1800dc137da4970eff321881720c4cff0caa4e9c27e97caf10252edf9a61
-  md5: c3fd47569eb9c2908e0e76a6fd59161d
+- conda: https://conda.anaconda.org/conda-forge/noarch/jupyterlab-chat-0.23.0-pyhc364b38_0.conda
+  sha256: 61aa937f4020fbfc4bbd2752a0a66cc764705ac0343577846e9644845e2724d4
+  md5: fba7f914f95182d2840db3906270559e
   depends:
   - python >=3.10
-  - jupyter-collaboration >=4,<5
+  - jupyter-collaboration >=4,<6
   - jupyter_server >=2.0.1,<3
-  - jupyter_ydoc >=3.0.0,<4
-  - pycrdt >=0.12.48,<0.13.0
+  - jupyter_ydoc >=3.0.0,<5
+  - pycrdt >=0.12.48,<0.15.0
   - python
   license: BSD-3-Clause
   license_family: BSD
   purls:
   - pkg:pypi/jupyterlab-chat?source=hash-mapping
   run_exports: {}
-  size: 162739
-  timestamp: 1780673634546
+  size: 191314
+  timestamp: 1784752726053
 - conda: https://conda.anaconda.org/conda-forge/noarch/jupyterlab-commands-toolkit-0.1.6-pyhcf101f3_0.conda
   sha256: 6194eb2a160d7fa005222ab57ab4b9a412c57206a6fab470e71a4a32e3af0486
   md5: 3b6f597454de19f9f6dc37c900993c97
