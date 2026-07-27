@@ -65,5 +65,12 @@ jupyterhub:
     corePods:
       nodeAffinity:
         matchNodePurpose: require
+jupyterhub-home-nfs:
+  nodeSelector:
+    hub.jupyter.org/node-purpose: core
+    # need to match nfs disk type
+    disk-type.gke.io/pd-balanced: "true"
+    # or
+    # disk-type.gke.io/hyperdisk-balanced: "true"
 dask-gateway:
   enabled: false
