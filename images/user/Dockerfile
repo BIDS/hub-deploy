@@ -39,6 +39,7 @@ ENV PYTHONUNBUFFERED=1 \
     PATH=/srv/.pixi/envs/default:$PATH:/usr/sbin \
     SHELL=/usr/bin/bash
 WORKDIR /home/jovyan
+RUN chsh jovyan --shell /bin/bash
 USER $UID
 
 ENTRYPOINT ["/entrypoint.sh"]
