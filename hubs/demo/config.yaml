@@ -254,6 +254,16 @@ jupyterhub:
                   app.kubernetes.io/component: traefik
                   app.kubernetes.io/name: dask-gateway
     extraFiles:
+      sshEnv:
+        mountPath: /etc/profile.d/ssh-env.sh
+        # inherit env from PID 1 for ssh sessions
+        # this way we get our Jupyter env set on SSH login sessions
+        stringData: |
+          if [ ! -z "$SSH_CONNECTION" ]; then
+            source <(
+              cat /proc/1/environ | while IFS='' read -r -d $'\0' line ; do echo "export '$line'" ; done
+            )
+          fi
       opencode:
         mountPath: /etc/opencode-default/opencode.json
         data:
