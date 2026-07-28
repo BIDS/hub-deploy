@@ -62,6 +62,7 @@ pypdf = "*"
 httpx = "*"
 linkml-runtime = "*"
 dask-gateway = "*"
+jupyter-launcher-shortcuts = "*"
 
 
 [pypi-dependencies]
