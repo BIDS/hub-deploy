@@ -97,7 +97,7 @@ resource "google_container_node_pool" "user-2607" {
   }
 
   autoscaling {
-    min_node_count = 1
+    min_node_count = 0
     max_node_count = 5
   }
 
@@ -134,8 +134,8 @@ resource "google_container_node_pool" "user-lc" {
   }
 
   autoscaling {
-    min_node_count = 1
-    max_node_count = 5
+    min_node_count = 0
+    max_node_count = 1
   }
 
   node_config {
@@ -174,7 +174,7 @@ resource "google_container_node_pool" "user-lc-n2" {
 
   autoscaling {
     min_node_count = 0
-    max_node_count = 5
+    max_node_count = 2
   }
 
   node_config {
@@ -212,7 +212,7 @@ resource "google_container_node_pool" "user-lc-n4d" {
 
   autoscaling {
     min_node_count = 0
-    max_node_count = 5
+    max_node_count = 2
   }
 
   node_config {
