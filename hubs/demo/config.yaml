@@ -227,6 +227,9 @@ jupyterhub:
       pullPolicy: Always
     extraEnv:
       OPENCODE_CONFIG: /etc/opencode-default/opencode.json
+      # hosted openai config
+      OPENAI_HOST: https://ellm.nrp-nautilus.io
+      # BIOROUTER_PROVIDER: openai
       # lightcone-cli image-build contract (tf/modules/lightcone/cloudbuild.tf):
       # content-addressed project images are built by GCP Cloud Build from
       # a staged-context tarball (no git involved) and pushed here.
@@ -264,6 +267,24 @@ jupyterhub:
               cat /proc/1/environ | while IFS='' read -r -d $'\0' line ; do echo "export '$line'" ; done
             )
           fi
+      server_config:
+        mountPath: "/usr/local/etc/jupyter/jupyter_server_config.py"
+        stringData: |
+          import os
+          public_url = os.environ["JUPYTERHUB_PUBLIC_URL"]
+          print(f"{public_url=}")
+
+          biorouter_url = f"{public_url.rstrip('/')}/biorouter/"
+
+          c.ServerProxy.servers = {
+              # vscode already enabled via package
+              # "vscode": {
+              #     "command": ["code-server", "--auth", "none", "--disable-telemtry", "--port={port}"],
+              # },
+              "biorouter": {
+                  "command": ["biorouter-headless", "serve", "--port={port}", "--public-url", biorouter_url],
+              },
+          }
       opencode:
         mountPath: /etc/opencode-default/opencode.json
         data:
