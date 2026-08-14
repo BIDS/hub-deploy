@@ -28,6 +28,8 @@ jupyterhub:
             - ENC[AES256_GCM,data:hHS7I1NY4+a5D3Oz,iv:jMqKjVKQaSik2QOkJGW69rmIELrOw3CjbnkQiU4qTbI=,tag:GrQ9BV161V3eJirjMQjLNg==,type:str]
             - ENC[AES256_GCM,data:UStwlj3aS0IG4rYHeGI5IR5u4BAw9hGa,iv:SSSviSrmoO7DnWLH8wBEgJG1JlIn06GtNidcWzBd3Og=,tag:8VY59b5woPKi0TEd/eAZPw==,type:str]
             - ENC[AES256_GCM,data:o8iIxXN1q3PCawU0SFexHnlR4R4X31q2lQ==,iv:+9xLda1GlBm9CUiJdIgOogxP5RIUBNwoA+FmsKBtB5k=,tag:asKmnVNkaw+8EpgASbYD/A==,type:str]
+            - ENC[AES256_GCM,data:r3HVpDduhstFrQXcFaZ/6LVigQ==,iv:KsZ5cS7CF24nJC9W2nSkZB2MIot0KELJDrYG1JRRwzc=,tag:CGFH2ncuG2oGRxOqmd+5+w==,type:str]
+            - ENC[AES256_GCM,data:ZRDS0RlhLfwfM6jsnnsXhGJAEqg+WGQ=,iv:SxvUmNfP/3Can56dUj+MymG80bYJsOtgNYtIgdHVWZQ=,tag:uwt4JBtoi9ScQtoGByDJiQ==,type:str]
           collaborations:
             bids-comms:
               - ENC[AES256_GCM,data:dLNN1MtjbEHkz2bgT8vyp6h8xOM8JalqRi5rdRQ=,iv:NfppA84VDXeOObEqElJfFkzgACj2OUU1g/NVLw7LiTc=,tag:4GxPIsLE7MhKueKkEpUXbQ==,type:str]
@@ -81,7 +83,7 @@ sops:
     - created_at: "2025-10-21T23:38:24Z"
       enc: CiQANyKZ8JQe1adKWAUM5Zj4Zevua+ecZ/Yaa7QpDmaXBxll760SSQDUA4fNrJIcn6X07JCvjVXPvk35izob3ftA9ZLIIjYjwoYdBBNEuphU0KWlJFsuLktZMbk5PJKLhmuhZ9zgy3TN9MHsmvUEUsk=
       resource_id: projects/bids-jupyterhub/locations/global/keyRings/sops/cryptoKeys/sops-key
-  lastmodified: "2026-08-13T22:47:59Z"
-  mac: ENC[AES256_GCM,data:DmsoswGZUN2AeU+M1RG8kVx4VRNZ9qmUHY2OKT5c2mm/I68fOtI8vQRN6KU9B9fYC73g/2LfdqVZYF7R5vCBNbXdd4PkrxV1+CfCF6fzIuV+ITnJft0BdTkhbTiu+MH/E3MUwSwxr4hG+6t+K5qIlMK2t8LXsF7+Lp+B7NG2pNY=,iv:W/bl7hlGn9vljDmHqvXfkgYGZKlwRfYmOrHSMRMS4U8=,tag:2yqIMWdxsE41eue+/g15JA==,type:str]
+  lastmodified: "2026-08-14T23:31:12Z"
+  mac: ENC[AES256_GCM,data:AJgpmr7q/x+ETAYR3hD04Xx17jmvDH/tcizsDp2fSAdVK+0P0Jw2EfLYQddQK+PsEQnQnYmyMEArLCN6zDndzpwNtEtZFOopqBcyn4wg11x32MPUm3aVplkDghpGWrRhZu3aFC0dEU/0ZCV2pBxBSktnPUKv12mpPcTspAd6ED0=,iv:7EGclSjxsP+rt6lXpB20QKFjj60BtNfKRQ9Hp6AYvEE=,tag:2syHMs2JLi2Qnrg+6bTN9A==,type:str]
   unencrypted_suffix: _unencrypted
   version: 3.13.3
