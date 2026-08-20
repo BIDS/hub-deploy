@@ -19,7 +19,8 @@ altair = "*"
 jupyterlab_code_formatter = "*"
 ipywidgets = "*"
 jupyter-book = "*"
-jupyterhub-singleuser = "==5.5.0"
+# temporary: get hub prerelease from pypi
+# jupyterhub-singleuser = "5.5.0"
 jupyterlab-git = "*"
 jupyter_server_documents = "*"
 nb-cli = "*"
@@ -69,4 +70,6 @@ plotly = "*"
 
 [pypi-dependencies]
 jupyter-ai-biorouter-acp = { path = "jupyter-ai-biorouter-acp" }
+# temporary during prerelease
+jupyterhub = "==6.0.0b2"
 lightcone-cli = ">=0.4.0"
