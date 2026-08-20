@@ -8,9 +8,10 @@ jupyterhub:
       type: ClusterIP
   httpRoute:
     enabled: true
-    gateway:
-      name: default
-      namespace: support
+    parentRefs:
+      - kind: Gateway
+        name: default
+        namespace: support
   singleuser:
     events: true
     image:
