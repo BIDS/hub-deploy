@@ -1,5 +1,9 @@
 coreNodeSelector: &coreNodeSelector
   hub.jupyter.org/node-purpose: core
+# workloads with persistent storage must go on hyperdisk-capable nodes
+persistentNodeSelector: &persistentNodeSelector
+  hub.jupyter.org/node-purpose: core
+  disk-type.gke.io/hyperdisk-balanced: "true"
 jupyterhub:
   proxy:
     chp:
@@ -34,7 +38,7 @@ jupyterhub:
     continuous:
       enabled: true
   hub:
-    nodeSelector: *coreNodeSelector
+    nodeSelector: *persistentNodeSelector
     annotations:
       prometheus.io/scrape: "true"
       prometheus.io/path: /hub/metrics
@@ -67,11 +71,6 @@ jupyterhub:
       nodeAffinity:
         matchNodePurpose: require
 jupyterhub-home-nfs:
-  nodeSelector:
-    hub.jupyter.org/node-purpose: core
-    # need to match nfs disk type
-    disk-type.gke.io/pd-balanced: "true"
-    # or
-    # disk-type.gke.io/hyperdisk-balanced: "true"
+  nodeSelector: *persistentNodeSelector
 dask-gateway:
   enabled: false
