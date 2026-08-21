@@ -369,7 +369,7 @@ jupyterhub-home-nfs:
     enabled: true
   gke:
     enabled: true
-    volumeId: projects/bids-jupyterhub/zones/us-central1-a/disks/hub-nfs-demo
+    volumeId: projects/bids-jupyterhub/zones/us-central1-a/disks/hub-nfs-demo-hyperdisk
   quotaEnforcer:
     # disable broken quota enforcer
     enabled: false
