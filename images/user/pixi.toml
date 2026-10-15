@@ -67,7 +67,6 @@ jupyter-launcher-shortcuts = "*"
 seaborn = "*"
 plotly = "*"
 texlive-core = "*"
-latexmk = "*"
 imagemagick = "*"
 typst = "*"
 
