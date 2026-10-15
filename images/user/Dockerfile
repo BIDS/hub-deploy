@@ -1,4 +1,4 @@
-FROM ghcr.io/prefix-dev/pixi:0.68.1 AS build
+FROM ghcr.io/prefix-dev/pixi:0.82.0 AS build
 # git needed for dev lightcone
 RUN pixi global install git
 
@@ -7,24 +7,24 @@ COPY pixi* /srv/
 COPY jupyter-ai-biorouter-acp /srv/jupyter-ai-biorouter-acp
 WORKDIR /srv/
 RUN pixi install
-RUN apt-get update \
- && apt-get install -y --no-install-recommends \
-        patchelf \
- && rm -rf /var/lib/apt/lists/*
 COPY install-opencode.sh /srv/
 RUN pixi run install-opencode
 
 FROM debian:13
 
+COPY install-biorouter.sh /tmp/install-biorouter.sh
+
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
         ca-certificates \
+        curl \
         git \
         nano \
-        openssh-server \
         procps \
         vim \
         wget \
+ && bash /tmp/install-biorouter.sh \
+ && rm /tmp/install-biorouter.sh \
  && rm -rf /var/lib/apt/lists/*
  
 ARG UID=1000
