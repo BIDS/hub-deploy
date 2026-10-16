@@ -328,7 +328,7 @@ jupyterhub:
               #     "command": ["code-server", "--auth", "none", "--disable-telemtry", "--port={port}"],
               # },
               "biorouter": {
-                  "command": ["biorouter-headless", "serve", "--port={port}", "--public-url", biorouter_url],
+                  "command": ["biorouter", "serve", "--no-token","--port={port}", "--public-url", biorouter_url],
               },
           }
       opencode:
