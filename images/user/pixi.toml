@@ -45,7 +45,6 @@ unzip = "*"
 ipycytoscape = "*"
 jupyter-vscode-proxy = "*"
 code-server = ">=4"
-jupyter-sshd-proxy = "*"
 
 # lightcone-cli dependencies
 # to get as much as we can from conda instead of pypi
