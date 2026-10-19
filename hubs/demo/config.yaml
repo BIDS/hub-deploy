@@ -331,10 +331,12 @@ jupyterhub:
                   "command": [
                     "biorouter",
                     "serve",
+                    # no-token is safe because this is loopback
+                    # within a single container
                     "--no-token",
                     "--port={port}",
-                    # "--public-url",
-                    # biorouter_url,
+                    "--public-url",
+                    biorouter_url,
                   ],
                   "request_headers_override": {
                     "Host": "localhost",
