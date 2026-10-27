@@ -46,8 +46,8 @@ module "lightcone" {
 }
 
 
-resource "google_container_node_pool" "user-2607" {
-  name     = "user-202607"
+resource "google_container_node_pool" "user-2610" {
+  name     = "user-202610"
   cluster  = module.gke_cluster.cluster.id
   location = module.gke_cluster.cluster.location
   # node_locations lets us specify a single-zone regional cluster:
@@ -68,7 +68,7 @@ resource "google_container_node_pool" "user-2607" {
       mode = "GKE_METADATA"
     }
 
-    machine_type = "n2-highmem-8"
+    machine_type = "n2-standard-4"
     disk_size_gb = 100
     disk_type    = "pd-balanced"
 
@@ -82,6 +82,7 @@ resource "google_container_node_pool" "user-2607" {
     ]
   }
 }
+
 
 resource "google_container_node_pool" "user-lc-n2" {
   name     = "user-dask-n2-202607"
