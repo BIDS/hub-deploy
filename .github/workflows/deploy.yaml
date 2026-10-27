@@ -1,0 +1,58 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency: deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    environment: deploy
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+
+      - uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310 # v5.0.1
+
+      - name: install sops
+        uses: step-security/mozilla-sops-action@26ce9aa7a4c47b98eeefbd18665245dd58c4eb1b # v2.1.1
+      
+      - name: install requirements
+        run: |
+          pip install nox
+
+      - name: Configure Google Cloud credentials
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+        with:
+          project_id: bids-jupyterhub
+          workload_identity_provider: projects/579170579029/locations/global/workloadIdentityPools/github/providers/github-actions
+      
+      - name: Install gke-gcloud-auth-plugin
+        uses: google-github-actions/setup-gcloud@aa5489c8933f4cc7a4f7d45035b3b1440c9c10db # v3.0.1
+        with:
+          install_components: gke-gcloud-auth-plugin
+          
+      - name: test decrypt
+        run: |
+          nox -s decrypt
+
+      - name: update support
+        run: |
+          nox -s helm_support
+
+      - name: upgrade hub
+        run: |
+          nox -s helm_hub
+   
