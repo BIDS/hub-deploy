@@ -20,17 +20,12 @@ data "google_client_config" "provider" {}
 
 locals {
   service_accounts = {
-    deployer = {
-      display_name = "Deployment account for ${var.name}",
-      role         = "roles/container.admin",
-    },
     gke-node = {
       display_name = "GKE Node SA for ${var.name}",
       role         = "roles/container.defaultNodeServiceAccount",
     },
   }
   location = var.gke_location != null ? var.gke_location : data.google_client_config.provider.region
-  zone     = var.gke_zone != null ? var.gke_zone : data.google_client_config.provider.zone
 }
 
 resource "google_artifact_registry_repository" "repo" {
@@ -115,13 +110,6 @@ resource "google_project_iam_member" "iam" {
   for_each = local.service_accounts
   role     = each.value.role
   member   = "serviceAccount:${google_service_account.sa[each.key].email}"
-}
-
-resource "google_project_iam_member" "deploy-pusher" {
-  project = data.google_client_config.provider.project
-  # deployer also gets storage admin
-  role   = "roles/storage.admin"
-  member = "serviceAccount:${google_service_account.sa["deployer"].email}"
 }
 
 # create keys for each service account
