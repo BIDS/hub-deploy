@@ -46,6 +46,45 @@ module "lightcone" {
 }
 
 
+resource "google_container_node_pool" "core-2608-hyperdisk" {
+  name     = "core-n4d-202608"
+  cluster  = module.gke_cluster.cluster.name
+  location = module.gke_cluster.cluster.location
+  # node_locations lets us specify a single-zone regional cluster:
+  node_locations = [data.google_client_config.provider.zone]
+
+  lifecycle {
+    ignore_changes = [node_count]
+  }
+
+  autoscaling {
+    min_node_count = 1
+    max_node_count = 3
+  }
+  node_count = 1
+
+  node_config {
+    machine_type = "n4d-standard-2"
+    disk_size_gb = 30
+    disk_type    = "hyperdisk-balanced"
+
+    # Required with Workload Identity: the GKE metadata server hands
+    # pods their namespace identity instead of the node SA.
+    workload_metadata_config {
+      mode = "GKE_METADATA"
+    }
+
+    labels = {
+      "hub.jupyter.org/node-purpose" = "core"
+    }
+    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
+    service_account = module.gke_cluster.service_accounts["gke-node"]
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/cloud-platform"
+    ]
+  }
+}
+
 resource "google_container_node_pool" "user-2610" {
   name     = "user-202610"
   cluster  = module.gke_cluster.cluster.id

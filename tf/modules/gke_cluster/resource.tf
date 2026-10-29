@@ -20,17 +20,12 @@ data "google_client_config" "provider" {}
 
 locals {
   service_accounts = {
-    deployer = {
-      display_name = "Deployment account for ${var.name}",
-      role         = "roles/container.admin",
-    },
     gke-node = {
       display_name = "GKE Node SA for ${var.name}",
       role         = "roles/container.defaultNodeServiceAccount",
     },
   }
   location = var.gke_location != null ? var.gke_location : data.google_client_config.provider.region
-  zone     = var.gke_zone != null ? var.gke_zone : data.google_client_config.provider.zone
 }
 
 resource "google_artifact_registry_repository" "repo" {
@@ -95,86 +90,6 @@ resource "google_container_cluster" "cluster" {
   }
 }
 
-
-resource "google_container_node_pool" "core-2608" {
-  name     = "core-e-202608"
-  cluster  = google_container_cluster.cluster.name
-  location = local.location # location of *cluster*
-  # node_locations lets us specify a single-zone regional cluster:
-  node_locations = [local.zone]
-
-  lifecycle {
-    ignore_changes = [node_count]
-  }
-
-  autoscaling {
-    min_node_count = 0
-    max_node_count = 3
-  }
-  node_count = 1
-
-  node_config {
-    machine_type = "e2-medium"
-    disk_size_gb = 30
-    disk_type    = "pd-balanced"
-
-    # Required with Workload Identity: the GKE metadata server hands
-    # pods their namespace identity instead of the node SA.
-    workload_metadata_config {
-      mode = "GKE_METADATA"
-    }
-
-    labels = {
-      "hub.jupyter.org/node-purpose" = "core"
-    }
-    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-    service_account = google_service_account.sa["gke-node"].email
-    oauth_scopes = [
-      "https://www.googleapis.com/auth/cloud-platform"
-    ]
-  }
-}
-
-resource "google_container_node_pool" "core-2608-hyperdisk" {
-  name     = "core-n4d-202608"
-  cluster  = google_container_cluster.cluster.name
-  location = local.location # location of *cluster*
-  # node_locations lets us specify a single-zone regional cluster:
-  node_locations = [local.zone]
-
-  lifecycle {
-    ignore_changes = [node_count]
-  }
-
-  autoscaling {
-    min_node_count = 1
-    max_node_count = 3
-  }
-  node_count = 1
-
-  node_config {
-    machine_type = "n4d-standard-2"
-    disk_size_gb = 30
-    disk_type    = "hyperdisk-balanced"
-
-    # Required with Workload Identity: the GKE metadata server hands
-    # pods their namespace identity instead of the node SA.
-    workload_metadata_config {
-      mode = "GKE_METADATA"
-    }
-
-    labels = {
-      "hub.jupyter.org/node-purpose" = "core"
-    }
-    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-    service_account = google_service_account.sa["gke-node"].email
-    oauth_scopes = [
-      "https://www.googleapis.com/auth/cloud-platform"
-    ]
-  }
-}
-
-
 output "cluster" {
   value = {
     name     = google_container_cluster.cluster.name,
@@ -195,13 +110,6 @@ resource "google_project_iam_member" "iam" {
   for_each = local.service_accounts
   role     = each.value.role
   member   = "serviceAccount:${google_service_account.sa[each.key].email}"
-}
-
-resource "google_project_iam_member" "deploy-pusher" {
-  project = data.google_client_config.provider.project
-  # deployer also gets storage admin
-  role   = "roles/storage.admin"
-  member = "serviceAccount:${google_service_account.sa["deployer"].email}"
 }
 
 # create keys for each service account
