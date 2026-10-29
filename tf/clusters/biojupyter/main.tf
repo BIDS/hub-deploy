@@ -24,6 +24,10 @@ locals {
 
 data "google_client_config" "provider" {}
 
+module "sops_deploy" {
+  source = "../../modules/sops_deploy"
+}
+
 module "gke_cluster" {
   source = "../../modules/gke_cluster"
   name   = local.name
