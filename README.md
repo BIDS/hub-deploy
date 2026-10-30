@@ -107,8 +107,6 @@ pixi update
 Any package update change must include updates to `pixi.lock`.
 So if you edit `pixi.toml` by hand instead of the pixi command-line, you'll need to run `pixi lock` to update the lockfile.
 
-[pixi]: https://pixi.prefix.dev
-
 ## Deploying from GitHub Actions
 
 Deploys run from `.github/workflows/deploy.yaml` on push to `main`,
@@ -206,3 +204,5 @@ gcloud kms keys get-iam-policy sops-key --keyring=sops --location=global --proje
 
 The provider name, project number, and `principalSet` member are identifiers, not secrets.
 A token from any other repository or environment is rejected.
+
+[pixi]: https://pixi.prefix.dev
