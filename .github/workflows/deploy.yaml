@@ -16,6 +16,7 @@ jobs:
       project_id: bids-biojupyter
       workload_identity_provider: projects/520338918604/locations/global/workloadIdentityPools/github/providers/github-actions
   deploy-prod:
+    name: deploy ${{ matrix.cluster_name }} / ${{ matrix.hub_name }}
     needs:
       - deploy-staging
     strategy:
