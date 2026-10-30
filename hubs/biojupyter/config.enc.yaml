@@ -1,0 +1,37 @@
+jupyterhub:
+  hub:
+    config:
+      JupyterHub:
+        cookie_secret: ENC[AES256_GCM,data:I3fL5EAVAtZrGIR2IXlT2bRgV47GLKT+bQTrgeuENp/phDIPyEp4v1aW/MPeyJ/eRaRrAHRq63YRC07KSDuY5g==,iv:nr+K2C6/6FLDd7EbgjNgbgiJAZBgm0Km96t0u9+84bo=,tag:LuiFl2O7M1XD0bnf0N2YpQ==,type:str]
+      CryptKeeper:
+        keys:
+          - ENC[AES256_GCM,data:Z4tyIhddNLjcXXbGoqLD6M3QcFtYsiu7C/0WKX3LNgN7Fx3hU3zkIutBS4imD8TXT9bqgwoqqhSUMBbj+GVeSw==,iv:HuqPMZmxWkNcouZrhGXtwDZoGsxvYmuHbQeE7YDicx8=,tag:sxrYO8jcL22wF0cxDUJ6XQ==,type:str]
+      CILogonOAuthenticator:
+        client_id: ENC[AES256_GCM,data:iRoG,iv:v62KA0BRaWlKy9CgZNhVz/LDd7b+7OxIGrrNpYfVsaE=,tag:V7/+SM2/v1OdVZ5WMSQyXw==,type:str]
+        client_secret: ENC[AES256_GCM,data:8NxV,iv:tDJbrInK/Om2Kn81anhzDEmhPBw1tQ8pBcRB40xfc0s=,tag:+gCgsTii0UVG3IrbqyfbSA==,type:str]
+      GitHubOAuthenticator:
+        client_id: ENC[AES256_GCM,data:n1CuxWhr9l7TEOXfgAyatF36MIk=,iv:eIpqhKS55+G2tsuKRhILtRme2ktKzEwL08kGTw4tAf8=,tag:SjHC9+jSVEEUIHDRfXCAxg==,type:str]
+        client_secret: ENC[AES256_GCM,data:tYyfmeJ+jiNt1GfAQMbbm626hLnp/Swhd/J0bxYXysX2+56g/FaVtw==,iv:8WgSJ0Bt5nNFWKEWLllydXPHuNExxgRDXyK2lk/T4ag=,tag:G1H/9M22O36QUl7PiPW9Tg==,type:str]
+    extraFiles:
+      access:
+        data:
+          admin_users:
+            - ENC[AES256_GCM,data:yaoZGwwzzW85gp0=,iv:XyRx9QdCHZoDozy1fJ06iBGOpOt+yoV18nvws3ELyto=,tag:RV82Z/DrXT6w5hVyhBzvoA==,type:str]
+            - ENC[AES256_GCM,data:5T/HlpU=,iv:XDYMijWrZryEMgSID/eP0BJMasKvmkQr0m6DI4q7ozE=,tag:C2ZsaK2LnhPufrnoLeIH8Q==,type:str]
+            - ENC[AES256_GCM,data:nK+kAy3FQ/o8i5c=,iv:qXoc5VXoeHnE/sNp8Lbetn/CceGwX6d1+v08T2Vyjzk=,tag:aLfgHl5fVCkSsGZ3biftVw==,type:str]
+            - ENC[AES256_GCM,data:1m7iI4MS6w==,iv:v0yRCAOyiJ+f492XXtco6JNmvsOBtK3FLJdkDmodndc=,tag:hvU3EveRyWhsxBli18SjTQ==,type:str]
+          collaborations: {}
+  proxy:
+    secretToken: ENC[AES256_GCM,data:VBM1KRF0m0GvvqV2+V4lKof76fImEV1laqsYHLw/8Ov0FtZoVi4aKeYKZ1U4cJMeTJXvqNGVxpFPcIAdAkhDjQ==,iv:uqidM3qrP6a9AFZfMHOuoujDXfjvj94Y/HJAvokXzp8=,tag:0gAdAuFWZOlz/I5jvxuiow==,type:str]
+  singleuser:
+    extraEnv:
+      NRP_TOKEN: ENC[AES256_GCM,data:bM/2qP7X+kC1/G1GTtanLp+QlhFL/+Yuucfm6+p5wvw=,iv:C8XDuY0lJ0Wtxu4u57+Dc+cJfHn99gy6adhSWnYczls=,tag:8v6FyasvwjMp8OIuOS601g==,type:str]
+sops:
+  gcp_kms:
+    - created_at: "2026-10-30T20:49:48Z"
+      enc: CiQAAy40tjdiEsgd82EI7sPdOSzVFWIdQUMEIgoNt8w6PzgJBOUSSQDMKopFTIlLZdyEngI8PL0gwI10Dszd2wvlzuMnZfviA0kYh96n+r5qiQRUhvbtm+RY5TcLqs52rT0+dmdz0lmAT2OkLvanqSc=
+      resource_id: projects/bids-biojupyter/locations/global/keyRings/sops/cryptoKeys/sops-key
+  lastmodified: "2026-10-30T21:46:32Z"
+  mac: ENC[AES256_GCM,data:uYVt5eVozSa8mZSWe5ozh+CHvw/LD+wcNAixLmFIYr1Df55XgHIM44Oc0BLs1ISifHqUBLMb8+AZeDqI9x/Kwov3RmpNJcavJnOvpJPhRQEXZ/7OkrFs6R501d2fMWh6n/7JZbhta8ninM3/fvJDrS5UJ40/yzryGS0mvUxtO7E=,iv:iSeK3Ygvyv89OqTKdHpD2MKyGUEIOjmqzDX6Toa8b0k=,tag:SU6+R+HzlZLWlTMkpLo3Iw==,type:str]
+  unencrypted_suffix: _unencrypted
+  version: 3.13.3

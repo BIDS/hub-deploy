@@ -1,0 +1,4 @@
+gcp:
+  project: bids-jupyterhub
+  zone: us-central1
+  cluster_name: demo

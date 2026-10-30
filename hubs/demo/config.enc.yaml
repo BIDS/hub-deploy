@@ -65,13 +65,13 @@ jupyterhub:
     secretToken: ENC[AES256_GCM,data:3QKrgCSyP6Wr17HB79aoy+VK1RbQhtNujm2dVy59HFsszl210D4Z3auoVcWrM/oMR1T0wRm33feJT96loLTyYio=,iv:A1KgOt0mhNAt6VVN4OMfRcDp7kYq37yn6ji29T+p60M=,tag:rAI3Cp0720E6H1gkmBkVdg==,type:str]
   singleuser:
     extraEnv:
-      OPENAI_API_KEY: ENC[AES256_GCM,data:MgGf643HEVCHaPFLYGhZ65n5fFqV5d5ljrtZwM/E5PM=,iv:FcGluA2wC+uRM4ow6Z2+jllGHeU5ZwFUajI4lMBrCcQ=,tag:yds3ZtTY73AIX+N0ppC/6Q==,type:str]
+      NRP_TOKEN: ENC[AES256_GCM,data:CSz18bekB7mn+lB2i/tb2JsTTcfWecFibWYV+BWqj3g=,iv:+AJjRhTuitKBYa7P8g2dnLksiuoIpCahpOlQbCaC/Fs=,tag:rDAtbM4LaY5rnG3WzGPCGg==,type:str]
 sops:
   gcp_kms:
     - created_at: "2025-10-21T23:38:24Z"
       enc: CiQANyKZ8JQe1adKWAUM5Zj4Zevua+ecZ/Yaa7QpDmaXBxll760SSQDUA4fNrJIcn6X07JCvjVXPvk35izob3ftA9ZLIIjYjwoYdBBNEuphU0KWlJFsuLktZMbk5PJKLhmuhZ9zgy3TN9MHsmvUEUsk=
       resource_id: projects/bids-jupyterhub/locations/global/keyRings/sops/cryptoKeys/sops-key
-  lastmodified: "2026-10-27T22:11:14Z"
-  mac: ENC[AES256_GCM,data:xfCEONr+jWjaFUZfsj7nOxxd2TKMFi9IKZU0HbC1yS3iIAwghY2366YHKO8+BlH6ZvFpMu4jtZVEer8M87OIf8GqNhY8ZAZ10mZd1DttW2X7tZ72i7fxvHel9zsybUDCCGI3Nr9tHTIy/eal6nGuXUaZsY3EvI7s1elVbmKSO+A=,iv:PPDl46/S140cv7h1wyHb01pssF46jVQ9fJpfB0BcTF4=,tag:AGq7B2+9xeVKyqUZ8tG41Q==,type:str]
+  lastmodified: "2026-10-30T20:42:57Z"
+  mac: ENC[AES256_GCM,data:LSj5nWlCiULMwcJLf3NOO4ksVIRIJ1cRJLEEPRVLXwNJ8R7oOo1mb6exOerxFvIR3oGblpmqDoY6EeS77dw8COGYmAUbzyTFxmGe9RRu3oYS+PWQFHwROgMQxjMSNVZptv/U0qxoQ5BKWVo8i1kyICiCuKNmeLYeemOeAYJB4e8=,iv:kHQcw1znZeLeo3tHY06877N6smIDzB4euYx8c8u9Hu8=,tag:DESzecBJKK3p9GDY8wknog==,type:str]
   unencrypted_suffix: _unencrypted
   version: 3.13.3
