@@ -1,0 +1,4 @@
+gcp:
+  project: bids-biojupyter
+  zone: us-west2
+  cluster_name: biojupyter-hub

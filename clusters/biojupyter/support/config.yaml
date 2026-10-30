@@ -1,0 +1,48 @@
+gateway:
+  # need to specify each hostname individually on the gateway
+  # for cert-manager
+  hostnames:
+    # TODO: berkeley dns
+    - hub.biojupyter.minrk.net
+    - staging.hub.biojupyter.minrk.net
+    - grafana.biojupyter.minrk.net
+    - prometheus.biojupyter.minrk.net
+  config:
+    provider:
+      kubernetes:
+        envoyService:
+          annotations:
+            # preserve ip when gateway service gets recreated
+            cloud.google.com/l4-rbs: "enabled"
+            networking.gke.io/load-balancer-ip-addresses: "biojupyter-hub-ingress"
+grafana:
+  grafana.ini:
+    auth.anonymous:
+      enabled: true
+      org_name: BIDS
+      org_role: Viewer
+    auth.basic:
+      enabled: true
+  route:
+    main:
+      hostnames:
+        - grafana.biojupyter.minrk.net
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: prometheus
+          orgId: 1
+          type: prometheus
+          url: https://prometheus.biojupyter.minrk.net
+          isDefault: true
+          editable: false
+  persistence:
+    # 4Gi is minimum for hyperdisk
+    size: 4Gi
+prometheus:
+  server:
+    route:
+      main:
+        hostnames:
+          - prometheus.biojupyter.minrk.net
