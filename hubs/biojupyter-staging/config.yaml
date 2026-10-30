@@ -96,7 +96,7 @@ jupyterhub-home-nfs:
     enabled: true
   gke:
     enabled: true
-    volumeId: projects/bids-biojupyter/zones/us-west2-c/disks/hub-nfs-biojupyter-hub-hyperdisk
+    volumeId: projects/bids-biojupyter/zones/us-west2-c/disks/hub-nfs-biojupyter-staging
   quotaEnforcer:
     # disable broken quota enforcer
     enabled: false
