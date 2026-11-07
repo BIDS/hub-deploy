@@ -5,7 +5,7 @@ version: "0.0.0"
 kubeVersion: ">= 1.32.0-0"
 dependencies:
   - name: jupyterhub
-    version: "5.0.0-0.dev.git.7589.h7cce063b"
+    version: "5.0.0-0.dev.git.7600.hb57396c1"
     repository: "https://jupyterhub.github.io/helm-chart"
   - name: jupyterhub-home-nfs
     version: "1.2.0"

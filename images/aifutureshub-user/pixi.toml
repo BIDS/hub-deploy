@@ -11,7 +11,7 @@ install-opencode = "bash install-opencode.sh"
 [dependencies]
 python = "3.12.*"
 pip = "*"
-jupyterhub-base = "6.1.*"
+jupyterhub-base = "6.2.*"
 jupyterlab = ">=4.5.7,<5"
 jupyter-ai = ">=3.0.0,<4"
 matplotlib-base = "*"
