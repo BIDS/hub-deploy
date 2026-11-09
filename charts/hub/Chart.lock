@@ -1,12 +1,12 @@
 dependencies:
 - name: jupyterhub
   repository: https://jupyterhub.github.io/helm-chart
-  version: 5.0.0-0.dev.git.7487.hf961cb60
+  version: 5.0.0-0.dev.git.7600.hb57396c1
 - name: jupyterhub-home-nfs
   repository: oci://ghcr.io/2i2c-org/jupyterhub-home-nfs
   version: 1.2.0
 - name: dask-gateway
   repository: https://helm.dask.org
   version: 2026.3.0
-digest: sha256:0c095b56148dd56426aff6f57cedcd20a7475254e0a6b4620221369cd661394a
-generated: "2026-08-20T15:18:47.050844-07:00"
+digest: sha256:3d7b4b136336dd89a63281cfea4131c527febeac9b8855ca137e82382226c1a6
+generated: "2026-11-09T10:25:10.305081-08:00"
