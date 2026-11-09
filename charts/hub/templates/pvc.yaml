@@ -1,0 +1,15 @@
+{{- range $name, $disk := .Values.diskVolumes }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $.Release.Name }}-{{ $name }}
+spec:
+  accessModes:
+    {{- toYaml $disk.accessModes | nindent 4 }}
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: {{ $disk.size }}
+  storageClassName: ""
+  volumeName: {{ $.Release.Name }}-{{ $name }}
+{{- end }}

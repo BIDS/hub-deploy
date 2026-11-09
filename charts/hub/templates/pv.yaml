@@ -1,0 +1,22 @@
+{{- range $name, $disk := .Values.diskVolumes }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ $.Release.Name }}-{{ $name }}
+spec:
+  capacity:
+    storage: {{ $disk.size }}
+  volumeMode: Filesystem
+  accessModes:
+    {{- toYaml $disk.accessModes | nindent 4 }}
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  csi:
+    driver: pd.csi.storage.gke.io
+    fsType: {{ $disk.fsType }}
+    volumeHandle: {{ $disk.volumeHandle }}
+  {{- with $disk.mountOptions }}
+  mountOptions:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}

@@ -1,3 +1,10 @@
+diskVolumes:
+  cxt-database:
+    volumeHandle: projects/bids-biojupyter/zones/us-west2-c/disks/cxt-database
+    size: 1M
+    fsType: xfs
+    accessModes:
+      - ReadOnlyMany
 jupyterhub:
   httpRoute:
     hostnames:
@@ -96,6 +103,16 @@ jupyterhub:
                   },
               },
           }
+    storage:
+      extraVolumes:
+        cxt-database:
+          name: cxt-database
+          persistentVolumeClaim:
+            claimName: biojupyter-staging-cxt-database
+      extraVolumeMounts:
+        cxt-database:
+          name: cxt-database
+          mountPath: /home/jovyan/cxt-database
 jupyterhub-home-nfs:
   prometheusExporter:
     enabled: true
