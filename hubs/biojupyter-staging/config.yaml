@@ -8,7 +8,7 @@ diskVolumes:
 jupyterhub:
   httpRoute:
     hostnames:
-      - staging.hub.biojupyter.minrk.net
+      - staging.hub.biojupyter.bids.berkeley.edu
   hub:
     db:
       pvc:
@@ -16,10 +16,10 @@ jupyterhub:
         storage: 4Gi
     config:
       JupyterHub:
-        authenticator_class: github
-        public_url: https://staging.hub.biojupyter.minrk.net
+        authenticator_class: cilogon
+        public_url: https://staging.hub.biojupyter.bids.berkeley.edu
       OAuthenticator:
-        oauth_callback_url: https://staging.hub.biojupyter.minrk.net/hub/oauth_callback
+        oauth_callback_url: https://staging.hub.biojupyter.bids.berkeley.edu/hub/oauth_callback
       GitHubOAuthenticator:
         scope:
           - "user:email"
