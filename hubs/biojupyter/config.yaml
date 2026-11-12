@@ -108,7 +108,7 @@ jupyterhub:
         cxt-database:
           name: cxt-database
           persistentVolumeClaim:
-            claimName: biojupyter-staging-cxt-database
+            claimName: biojupyter-cxt-database
       extraVolumeMounts:
         cxt-database:
           name: cxt-database
