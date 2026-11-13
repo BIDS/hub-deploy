@@ -216,8 +216,9 @@ jupyterhub:
           allowed_users.add(f"{name}@collaboration")
 
         from jupyterhub.app import JupyterHub
+        from tornado.log import app_log
 
-        def collaboration_groups(auth_state):
+        def cilogon_collaboration_groups(auth_state):
           # we only get auth state here, not username
           # recompute username for group lookup
           # FIXME: this should be easier??
@@ -227,7 +228,14 @@ jupyterhub:
           authenticator.log.info(f"Loading groups for {username}: {groups}")
           return groups
 
-        c.CILogonOAuthenticator.auth_state_groups_key = collaboration_groups
+        def github_collaboration_groups(auth_state):
+          username = auth_state["github_user"]["login"].lower()
+          groups = collab_groups.get(username, [])
+          app_log.info(f"Loading groups for {username}: {groups}")
+          return groups
+
+        c.CILogonOAuthenticator.auth_state_groups_key = cilogon_collaboration_groups
+        c.GitHubOAuthenticator.auth_state_groups_key = github_collaboration_groups
         c.OAuthenticator.manage_groups = True
     extraFiles:
       access:
