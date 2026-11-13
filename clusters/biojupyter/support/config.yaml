@@ -2,10 +2,10 @@ gateway:
   # need to specify each hostname individually on the gateway
   # for cert-manager
   hostnames:
-    - hub.biojupyter.bids.berkeley.edu
-    - staging.hub.biojupyter.bids.berkeley.edu
-    - prometheus.hub.biojupyter.bids.berkeley.edu
-    - grafana.hub.biojupyter.bids.berkeley.edu
+    - biojupyter-hub.bids.berkeley.edu
+    - biojupyter-staging.bids.berkeley.edu
+    - biojupyter-prometheus.bids.berkeley.edu
+    - biojupyter-grafana.bids.berkeley.edu
   config:
     provider:
       kubernetes:
@@ -25,7 +25,7 @@ grafana:
   route:
     main:
       hostnames:
-        - grafana.hub.biojupyter.bids.berkeley.edu
+        - biojupyter-grafana.bids.berkeley.edu
   datasources:
     datasources.yaml:
       apiVersion: 1
@@ -33,7 +33,7 @@ grafana:
         - name: prometheus
           orgId: 1
           type: prometheus
-          url: https://prometheus.hub.biojupyter.bids.berkeley.edu
+          url: https://biojupyter-prometheus.bids.berkeley.edu
           isDefault: true
           editable: false
   persistence:
@@ -44,4 +44,4 @@ prometheus:
     route:
       main:
         hostnames:
-          - prometheus.hub.biojupyter.bids.berkeley.edu
+          - biojupyter-prometheus.bids.berkeley.edu
