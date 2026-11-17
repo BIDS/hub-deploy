@@ -16,7 +16,7 @@ jupyterhub:
         storage: 4Gi
     config:
       JupyterHub:
-        authenticator_class: github
+        authenticator_class: cilogon
         public_url: https://biojupyter-staging.bids.berkeley.edu
       OAuthenticator:
         oauth_callback_url: https://biojupyter-staging.bids.berkeley.edu/hub/oauth_callback
