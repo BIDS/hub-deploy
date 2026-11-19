@@ -23,7 +23,6 @@ jupyter-book = "*"
 # temporary: get hub prerelease from pypi
 # jupyterhub-singleuser = "5.5.0"
 jupyterlab-git = "*"
-jupyter_server_documents = "*"
 nb-cli = "*"
 nodejs = "22.*"
 pandas = "*"

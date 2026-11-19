@@ -2,7 +2,7 @@ version: 7
 platforms:
 - name: linux-64
   virtual-packages:
-  - __unix=0=0
+  - __unix=0
   - __linux=4.18
   - __glibc=2.28
   - __archspec=0=x86_64
@@ -453,8 +453,6 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-ai-tools-0.7.0-pyhb6f2a46_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-book-2.1.7-pyh5ded981_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-builder-1.2.4-pyh5ded981_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-collaboration-ui-3.0.4-pyh5ded981_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-docprovider-3.0.4-pyh5ded981_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-launcher-shortcuts-4.0.3-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-live-content-0.1.2-pyhb6f2a46_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-lsp-2.3.1-pyhcf101f3_0.conda
@@ -467,8 +465,6 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_core-5.9.1-pyhc90fa1f_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_events-0.12.1-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_server-2.21.1-pyh5ded981_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_server_documents-0.3.3-pyhc364b38_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_server_fileid-0.9.2-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_server_terminals-0.5.4-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_ydoc-4.2.1-pyh5ded981_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/jupyterhub-base-6.2.0-pyh53cf698_0.conda
@@ -6781,7 +6777,7 @@ packages:
   license: Apache-2.0
   license_family: APACHE
   purls:
-  - pkg:pypi/cyclopts?source=compressed-mapping
+  - pkg:pypi/cyclopts?source=hash-mapping
   run_exports: {}
   size: 238135
   timestamp: 1793656119142
@@ -7786,7 +7782,7 @@ packages:
   license: BSD-3-Clause
   license_family: BSD
   purls:
-  - pkg:pypi/jsonpointer?source=compressed-mapping
+  - pkg:pypi/jsonpointer?source=hash-mapping
   run_exports: {}
   size: 16176
   timestamp: 1793687837164
@@ -8014,36 +8010,6 @@ packages:
   run_exports: {}
   size: 888217
   timestamp: 1793170401976
-- conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-collaboration-ui-3.0.4-pyh5ded981_0.conda
-  sha256: 96a0af04e47e829c4c6f2e239d2f17516f001b8ecb4ad410b58bf1d6a1659d10
-  md5: 56efd1c46d6a91f66f31d8afe88b809e
-  depends:
-  - python >=3.11
-  - python
-  constrains:
-  - jupyterlab >=4.6.0,<4.7.0
-  license: BSD-3-Clause
-  license_family: BSD
-  purls:
-  - pkg:pypi/jupyter-collaboration-ui?source=compressed-mapping
-  run_exports: {}
-  size: 47139
-  timestamp: 1790121510651
-- conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-docprovider-3.0.4-pyh5ded981_0.conda
-  sha256: faa030349f761d710ebd286baa68ce18ae52e8cb9d00774e5a9540b6b1a404b9
-  md5: f5951b1a64698222352ed86cff1fb61d
-  depends:
-  - python >=3.11
-  - python
-  constrains:
-  - jupyterlab >=4.6.0,<4.7.0
-  license: BSD-3-Clause
-  license_family: BSD
-  purls:
-  - pkg:pypi/jupyter-docprovider?source=compressed-mapping
-  run_exports: {}
-  size: 162351
-  timestamp: 1790130231166
 - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter-launcher-shortcuts-4.0.3-pyhd8ed1ab_1.conda
   sha256: 4c40d3a9e1a2257cef3c24d49335254ae0396cce6ecb0d2ba951437fe783d09c
   md5: 6e2d1c879fdcd1e8f52a902f80ecdd57
@@ -8258,39 +8224,6 @@ packages:
   run_exports: {}
   size: 366859
   timestamp: 1789490136287
-- conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_server_documents-0.3.3-pyhc364b38_0.conda
-  sha256: aae644af57c20482791236b207f2edbe888d70b2efe3ec5043b1410209286b31
-  md5: 52c813aa10916e2ed8b6842a73a32a04
-  depends:
-  - python >=3.9
-  - jupyter-collaboration-ui >=2.4.0,<4
-  - jupyter-docprovider >=2.4.0,<4
-  - jupyter_server >=2.13,<3
-  - jupyter_server_fileid >=0.9.0,<0.10.0
-  - pycrdt >=0.12.49
-  - jupyter_ydoc >=3.0.0,<5.0.0
-  - python
-  license: BSD-3-Clause
-  license_family: BSD
-  purls:
-  - pkg:pypi/jupyter-server-documents?source=hash-mapping
-  run_exports: {}
-  size: 268135
-  timestamp: 1786116655937
-- conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_server_fileid-0.9.2-pyhd8ed1ab_1.conda
-  sha256: 6dd56e62edb1ad42bdacf4d32d9aeae5c85f7756e9a3a21eb15598a6fdff4d13
-  md5: fbf0a308ddc042202a005a1760524823
-  depends:
-  - jupyter_events >=0.5.0
-  - jupyter_server >=1.15,<3
-  - python >=3.9
-  license: BSD-3-Clause
-  license_family: BSD
-  purls:
-  - pkg:pypi/jupyter-server-fileid?source=hash-mapping
-  run_exports: {}
-  size: 20528
-  timestamp: 1734791277734
 - conda: https://conda.anaconda.org/conda-forge/noarch/jupyter_server_terminals-0.5.4-pyhcf101f3_0.conda
   sha256: 5eda79ed9f53f590031d29346abd183051263227dd9ee667b5ca1133ce297654
   md5: 7b8bace4943e0dc345fc45938826f2b8
@@ -8375,7 +8308,7 @@ packages:
   license: BSD-3-Clause
   license_family: BSD
   purls:
-  - pkg:pypi/jupyterlab?source=compressed-mapping
+  - pkg:pypi/jupyterlab?source=hash-mapping
   run_exports: {}
   size: 13568617
   timestamp: 1793297335686
@@ -9208,7 +9141,7 @@ packages:
   license: MIT
   license_family: MIT
   purls:
-  - pkg:pypi/platformdirs?source=compressed-mapping
+  - pkg:pypi/platformdirs?source=hash-mapping
   run_exports: {}
   size: 35802
   timestamp: 1793634925486
@@ -9420,7 +9353,7 @@ packages:
   license: MIT
   license_family: MIT
   purls:
-  - pkg:pypi/pydantic?source=compressed-mapping
+  - pkg:pypi/pydantic?source=hash-mapping
   run_exports: {}
   size: 360046
   timestamp: 1793349177574
@@ -9987,7 +9920,7 @@ packages:
   license: MIT
   license_family: MIT
   purls:
-  - pkg:pypi/soupsieve?source=compressed-mapping
+  - pkg:pypi/soupsieve?source=hash-mapping
   run_exports: {}
   size: 50313
   timestamp: 1793725679443
@@ -10028,7 +9961,7 @@ packages:
   license: BSD-3-Clause
   license_family: BSD
   purls:
-  - pkg:pypi/sse-starlette?source=compressed-mapping
+  - pkg:pypi/sse-starlette?source=hash-mapping
   run_exports: {}
   size: 23620
   timestamp: 1792970184670
@@ -10218,7 +10151,7 @@ packages:
   - python
   license: MIT AND BSD-3-Clause
   purls:
-  - pkg:pypi/typer?source=compressed-mapping
+  - pkg:pypi/typer?source=hash-mapping
   run_exports: {}
   size: 188981
   timestamp: 1791331739467
