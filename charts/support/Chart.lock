@@ -1,12 +1,12 @@
 dependencies:
 - name: gateway-helm
   repository: oci://docker.io/envoyproxy
-  version: v1.6.2
+  version: v1.10.0
 - name: prometheus
   repository: https://prometheus-community.github.io/helm-charts
   version: 27.36.0
 - name: grafana
   repository: https://grafana.github.io/helm-charts
   version: 9.4.4
-digest: sha256:46c838cb3dd725f56d1e76db31a38805116bb69329e8c29273416e08361a6cac
-generated: "2026-01-20T07:42:37.363889-08:00"
+digest: sha256:aede488b95a64ee141b52cd2efeba5ffa1f21514e50c3455d518710e7fa321e9
+generated: "2026-11-18T15:49:43.641504-08:00"
