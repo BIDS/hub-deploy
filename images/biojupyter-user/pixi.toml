@@ -48,6 +48,8 @@ code-server = ">=4"
 # for cxt database
 duckdb = "*"
 python-duckdb = "*"
+py3dmol = "*"
+google-cloud-sdk = ">=594.0.0,<595"
 
 
 [pypi-dependencies]
